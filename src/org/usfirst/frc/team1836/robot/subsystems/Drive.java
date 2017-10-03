@@ -97,5 +97,11 @@ public class Drive extends Subsystem {
 
   }
 
+  public void setDriveVelocity(double velocity) {
+    leftfwdtalon.changeControlMode(TalonControlMode.Speed);
+    rightfwdtalon.changeControlMode(TalonControlMode.Speed);
+    leftfwdtalon.set(velocity);
+    rightfwdtalon.set(velocity);
+  }
 
 }
