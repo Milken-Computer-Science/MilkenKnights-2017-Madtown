@@ -28,7 +28,8 @@ public final class Constants {
     public static final double GearI = 0.001;
     public static final double GearD = ((0.1 * 1023) / 8000) * 160;
     public static final double GearF = (1.0 * 1023) / (4400 / 60 / 10 * 4096);
-
+    
+    public static final double DriveFollowerP = 0.01;
   }
   
   public static class GearMech {

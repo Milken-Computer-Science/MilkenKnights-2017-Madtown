@@ -1,7 +1,8 @@
 package org.usfirst.frc.team1836.robot.auto.commands;
 
 import org.usfirst.frc.team1836.robot.subsystems.Drive;
-import org.usfirst.frc.team1836.robot.auto.routines.Path;
+import org.usfirst.frc.team1836.robot.util.TrajectoryPoint;
+import org.usfirst.frc.team1836.robot.auto.routines.MotionProfile;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -24,14 +25,16 @@ public class StraightPathFollower extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-      Drive.getInstance().setDriveVelocity(Path.Points[cycle][1]);
+    	if(cycle < MotionProfile.kNumPoints) {
+      Drive.getInstance().setDriveTrajectory(new TrajectoryPoint(MotionProfile.Points[cycle][0], MotionProfile.Points[cycle][0], cycle+1, MotionProfile.Points[cycle][2]));
       cycle++;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false;
+     	return cycle >= MotionProfile.kNumPoints;
     }
 
     // Called once after isFinished returns true
