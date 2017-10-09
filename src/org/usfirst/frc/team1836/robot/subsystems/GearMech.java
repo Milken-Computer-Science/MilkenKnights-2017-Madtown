@@ -10,73 +10,74 @@ import com.ctre.CANTalon.TalonControlMode;
 
 public class GearMech extends Subsystem {
 
-  CANTalon gearTalon = new CANTalon(Constants.Hardware.GEAR_PICKUP_TALON_ID);
-  GearMechanismState gearMechState;
+	CANTalon gearTalon = new CANTalon(Constants.Hardware.GEAR_PICKUP_TALON_ID);
+	GearMechanismState gearMechState;
 
-  public enum GearMechanismState {
-    PICKUP(Constants.GearMech.GearPickup), STOW(Constants.GearMech.GearStow), PLACE(
-        Constants.GearMech.GearPlace);
-    public final double state;
+	public enum GearMechanismState {
+		PICKUP(Constants.GearMech.GearPickup), STOW(Constants.GearMech.GearStow), PLACE(Constants.GearMech.GearPlace);
+		public final double state;
 
-    private GearMechanismState(final double state) {
-      this.state = state;
-    }
-  }
+		private GearMechanismState(final double state) {
+			this.state = state;
+		}
+	}
 
+	public GearMech() {
+		super("Gear Pickup");
+		gearMechState = GearMechanismState.STOW;
+		gearTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		gearTalon.reverseSensor(false);
+		gearTalon.configNominalOutputVoltage(+0.0f, -0.0f);
+		gearTalon.configPeakOutputVoltage(+12.0f, -12.0f);
+		gearTalon.setProfile(0);
+		gearTalon.setF(Constants.PID.GearF);
+		gearTalon.setP(Constants.PID.GearP);
+		gearTalon.setI(Constants.PID.GearI);
+		gearTalon.setD(Constants.PID.GearD);
+		gearTalon.setIZone(Constants.PID.GearIZone);
+		gearTalon.setMotionMagicCruiseVelocity(Constants.PID.GearV);
+		gearTalon.setMotionMagicAcceleration(Constants.PID.GearA);
+	}
 
-  public GearMech() {
-    super("Gear Pickup");
-    gearMechState = GearMechanismState.PLACE;
-    gearTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-    gearTalon.reverseSensor(false);
-    gearTalon.configNominalOutputVoltage(+0.0f, -0.0f);
-    gearTalon.configPeakOutputVoltage(+12.0f, -12.0f);
-    gearTalon.setProfile(0);
-    gearTalon.setF(Constants.PID.GearF);
-    gearTalon.setP(Constants.PID.GearP);
-    gearTalon.setI(Constants.PID.GearI);
-    gearTalon.setD(Constants.PID.GearD);
-    gearTalon.setIZone(Constants.PID.GearIZone);
-    gearTalon.setMotionMagicCruiseVelocity(Constants.PID.GearV);
-    gearTalon.setMotionMagicAcceleration(Constants.PID.GearA);
-  }
+	@Override
+	public void updateTeleop() {
+		if (Inputs.gearPickupButton.isPressed()) {
+			gearMechState = GearMechanismState.PICKUP;
+		} else if (Inputs.gearStowButton.isPressed()) {
+			gearMechState = GearMechanismState.STOW;
+		} else if (Inputs.gearPlaceButton.isPressed()) {
+			gearMechState = GearMechanismState.PLACE;
+		}
+		set(gearMechState);
+	}
 
-  @Override
-  public void updateTeleop() {
+	@Override
+	public void updateAuto() {
 
-    if (Inputs.gearPickupButton.isPressed()) {
-      gearMechState = GearMechanismState.PICKUP;
-      gearTalon.set(gearMechState.state);
-    } else if (Inputs.gearStowButton.isPressed()) {
-      gearMechState = GearMechanismState.STOW;
-      gearTalon.set(gearMechState.state);
-    } else if (Inputs.gearPlaceButton.isPressed()) {
-      gearMechState = GearMechanismState.PLACE;
-      gearTalon.set(gearMechState.state);
-    }
+	}
 
-  }
+	@Override
+	public void initTeleop() {
+		gearTalon.changeControlMode(TalonControlMode.MotionMagic);
+	}
 
-  @Override
-  public void updateAuto() {
+	@Override
+	public void initAuto() {
+		gearTalon.changeControlMode(TalonControlMode.MotionMagic);
+	}
 
-  }
+	@Override
+	public void sendToSmartDash() {
 
-  @Override
-  public void initTeleop() {
-    gearTalon.changeControlMode(TalonControlMode.MotionMagic);
-  }
+	}
 
-  @Override
-  public void initAuto() {
-    gearTalon.changeControlMode(TalonControlMode.MotionMagic);
-  }
+	public void setState(GearMechanismState state) {
+		gearMechState = state;
+		set(gearMechState);
+	}
 
-  @Override
-  public void sendToSmartDash() {
-
-  }
-
-
+	public void set(GearMechanismState state) {
+		gearTalon.set(state.state);
+	}
 
 }
