@@ -2,10 +2,11 @@ package org.usfirst.frc.team1836.robot.subsystems;
 
 import org.usfirst.frc.team1836.robot.Constants;
 import org.usfirst.frc.team1836.robot.Inputs;
+import org.usfirst.frc.team1836.robot.util.MkCANTalon;
 import org.usfirst.frc.team1836.robot.util.Subsystem;
 import org.usfirst.frc.team1836.robot.util.TrajectoryPoint;
 
-import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -15,10 +16,10 @@ public class Drive extends Subsystem {
 
 	private static Drive drive;
 	private final RobotDrive robotDr;
-	final CANTalon leftfwdtalon = new CANTalon(Constants.Hardware.LEFT_FWD_TALON_ID);
-	final CANTalon leftbacktalon = new CANTalon(Constants.Hardware.LEFT_BACK_TALON_ID);
-	final CANTalon rightfwdtalon = new CANTalon(Constants.Hardware.RIGHT_FWD_TALON_ID);
-	final CANTalon rightbacktalon = new CANTalon(Constants.Hardware.RIGHT_BACK_TALON_ID);
+	final MkCANTalon leftfwdtalon = new MkCANTalon(Constants.Hardware.LEFT_FWD_TALON_ID, Constants.Drive.WheelDiameter);
+	final MkCANTalon leftbacktalon = new MkCANTalon(Constants.Hardware.LEFT_BACK_TALON_ID, Constants.Drive.WheelDiameter);
+	final MkCANTalon rightfwdtalon = new MkCANTalon(Constants.Hardware.RIGHT_FWD_TALON_ID, Constants.Drive.WheelDiameter);
+	final MkCANTalon rightbacktalon = new MkCANTalon(Constants.Hardware.RIGHT_BACK_TALON_ID, Constants.Drive.WheelDiameter);
 	private TrajectoryPoint lastPoint;
 
 	public static Drive getInstance() {
@@ -30,6 +31,32 @@ public class Drive extends Subsystem {
 	public Drive() {
 		super("Drive");
 		robotDr = new RobotDrive(leftfwdtalon, leftbacktalon, rightfwdtalon, rightbacktalon);
+		
+		leftfwdtalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		leftfwdtalon.reverseSensor(false);
+		leftfwdtalon.configNominalOutputVoltage(+0.0f, -0.0f);
+		leftfwdtalon.configPeakOutputVoltage(+12.0f, -12.0f);
+		leftfwdtalon.setProfile(0);
+		leftfwdtalon.setF(Constants.PID.DriveF);
+		leftfwdtalon.setP(Constants.PID.DriveP);
+		leftfwdtalon.setI(Constants.PID.DriveI);
+		leftfwdtalon.setD(Constants.PID.DriveD);
+		leftfwdtalon.setIZone(Constants.PID.DriveIZone);
+		leftfwdtalon.setMotionMagicCruiseVelocity(Constants.PID.DriveV);
+		leftfwdtalon.setMotionMagicAcceleration(Constants.PID.DriveA);
+		
+		rightfwdtalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		rightfwdtalon.reverseSensor(false);
+		rightfwdtalon.configNominalOutputVoltage(+0.0f, -0.0f);
+		rightfwdtalon.configPeakOutputVoltage(+12.0f, -12.0f);
+		rightfwdtalon.setProfile(0);
+		rightfwdtalon.setF(Constants.PID.DriveF);
+		rightfwdtalon.setP(Constants.PID.DriveP);
+		rightfwdtalon.setI(Constants.PID.DriveI);
+		rightfwdtalon.setD(Constants.PID.DriveD);
+		rightfwdtalon.setIZone(Constants.PID.DriveIZone);
+		rightfwdtalon.setMotionMagicCruiseVelocity(Constants.PID.DriveV);
+		rightfwdtalon.setMotionMagicAcceleration(Constants.PID.DriveA);
 	}
 
 	@Override
@@ -104,15 +131,15 @@ public class Drive extends Subsystem {
 	public void setDriveTrajectory(TrajectoryPoint point) {
 		leftfwdtalon.changeControlMode(TalonControlMode.Speed);
 		rightfwdtalon.changeControlMode(TalonControlMode.Speed);
-		if(point.getCount() != 1) {
-			double leftVel = point.getVel() + ((lastPoint.getPos() - leftfwdtalon.getPosition()) * Constants.PID.DriveFollowerP);
-			double rightVel = point.getVel() + ((lastPoint.getPos() - rightfwdtalon.getPosition()) * Constants.PID.DriveFollowerP);
+		if (point.getCount() != 1) {
+			double leftVel = point.getVel()
+					+ ((lastPoint.getPos() - leftfwdtalon.getPosition()) * Constants.PID.DriveFollowerP);
+			double rightVel = point.getVel()
+					+ ((lastPoint.getPos() - rightfwdtalon.getPosition()) * Constants.PID.DriveFollowerP);
 			leftfwdtalon.set(leftVel);
-			rightfwdtalon.set(rightVel);	
+			rightfwdtalon.set(rightVel);
 		}
 		lastPoint = point;
 	}
-	
-	
 
 }
