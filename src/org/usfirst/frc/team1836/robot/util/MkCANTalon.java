@@ -7,45 +7,51 @@ import com.ctre.CANTalon;
 public class MkCANTalon extends CANTalon {
 
 	protected final double wheelDiameter;
-	protected final int ticksPerRev;
+	protected final int codesPerRev;
 	protected final int conversionFactor;
+	protected boolean setPrint;
 
-	public MkCANTalon(int deviceNumber, double wheelDiameter) {
+	public MkCANTalon(int deviceNumber, double wheelDiameter, boolean rotation) {
 		super(deviceNumber);
-		this.ticksPerRev = Constants.PID.codesPerRev;
-		configEncoderCodesPerRev(ticksPerRev);
+		this.codesPerRev = Constants.PID.codesPerRev;
+		configEncoderCodesPerRev(codesPerRev);
 		this.wheelDiameter = wheelDiameter;
-		this.conversionFactor = 1;
-	}
-
-	public MkCANTalon(int deviceNumber, double wheelDiameter, int conversionFactor) {
-		super(deviceNumber);
-		this.ticksPerRev = Constants.PID.codesPerRev;
-		configEncoderCodesPerRev(ticksPerRev);
-		this.wheelDiameter = wheelDiameter;
-		this.conversionFactor = conversionFactor;
+		setPrint = true;
+		conversionFactor = rotation ? 360 : 1;
 	}
 
 	public double getPosition() {
-		return (getEncPosition() / ticksPerRev) * (wheelDiameter * Math.PI);
+		return nativeToUser(getEncPosition());
 	}
 
 	public double getVelocity() {
-		return (getEncVelocity() / ticksPerRev) * (wheelDiameter * Math.PI);
+		return nativeToUser(getEncVelocity());
 	}
 
 	public void setEncoderPosition(double pos) {
-		setEncPosition((int) ((pos / (wheelDiameter * Math.PI)) * ticksPerRev));
+		setEncPosition(userToNative(pos));
 	}
 
 	public void set(double val) {
 		if (getControlMode() == TalonControlMode.Speed || getControlMode() == TalonControlMode.MotionMagic
 				|| getControlMode() == TalonControlMode.Position) {
-			set(((val / (wheelDiameter * Math.PI)) * ticksPerRev));
+			set(userToNative(val));
 		} else {
 			set(val);
 		}
+		System.out.println("Mode: " + getControlMode().toString() + "Value: ");
+	}
 
+	public int userToNative(double val) {
+		return ((int) ((val / (wheelDiameter * Math.PI)) * codesPerRev));
+	}
+
+	public double nativeToUser(int val) {
+		return (val / codesPerRev) * (wheelDiameter * Math.PI);
+	}
+	
+	public void setPrint(boolean val) {
+		this.setPrint = val;
 	}
 
 }

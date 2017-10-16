@@ -16,10 +16,14 @@ public class Drive extends Subsystem {
 
 	private static Drive drive;
 	private final RobotDrive robotDr;
-	final MkCANTalon leftfwdtalon = new MkCANTalon(Constants.Hardware.LEFT_FWD_TALON_ID, Constants.Drive.WheelDiameter);
-	final MkCANTalon leftbacktalon = new MkCANTalon(Constants.Hardware.LEFT_BACK_TALON_ID, Constants.Drive.WheelDiameter);
-	final MkCANTalon rightfwdtalon = new MkCANTalon(Constants.Hardware.RIGHT_FWD_TALON_ID, Constants.Drive.WheelDiameter);
-	final MkCANTalon rightbacktalon = new MkCANTalon(Constants.Hardware.RIGHT_BACK_TALON_ID, Constants.Drive.WheelDiameter);
+	final MkCANTalon leftfwdtalon = new MkCANTalon(Constants.Hardware.LEFT_FWD_TALON_ID, Constants.Drive.WheelDiameter,
+			false);
+	final MkCANTalon leftbacktalon = new MkCANTalon(Constants.Hardware.LEFT_BACK_TALON_ID,
+			Constants.Drive.WheelDiameter, false);
+	final MkCANTalon rightfwdtalon = new MkCANTalon(Constants.Hardware.RIGHT_FWD_TALON_ID,
+			Constants.Drive.WheelDiameter, false);
+	final MkCANTalon rightbacktalon = new MkCANTalon(Constants.Hardware.RIGHT_BACK_TALON_ID,
+			Constants.Drive.WheelDiameter, false);
 	private TrajectoryPoint lastPoint;
 
 	public static Drive getInstance() {
@@ -31,7 +35,7 @@ public class Drive extends Subsystem {
 	public Drive() {
 		super("Drive");
 		robotDr = new RobotDrive(leftfwdtalon, leftbacktalon, rightfwdtalon, rightbacktalon);
-		
+
 		leftfwdtalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		leftfwdtalon.reverseSensor(false);
 		leftfwdtalon.configNominalOutputVoltage(+0.0f, -0.0f);
@@ -44,7 +48,7 @@ public class Drive extends Subsystem {
 		leftfwdtalon.setIZone(Constants.PID.DriveIZone);
 		leftfwdtalon.setMotionMagicCruiseVelocity(Constants.PID.DriveV);
 		leftfwdtalon.setMotionMagicAcceleration(Constants.PID.DriveA);
-		
+
 		rightfwdtalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		rightfwdtalon.reverseSensor(false);
 		rightfwdtalon.configNominalOutputVoltage(+0.0f, -0.0f);
@@ -57,6 +61,11 @@ public class Drive extends Subsystem {
 		rightfwdtalon.setIZone(Constants.PID.DriveIZone);
 		rightfwdtalon.setMotionMagicCruiseVelocity(Constants.PID.DriveV);
 		rightfwdtalon.setMotionMagicAcceleration(Constants.PID.DriveA);
+
+		leftfwdtalon.setPrint(false);
+		leftbacktalon.setPrint(false);
+		rightfwdtalon.setPrint(false);
+		rightbacktalon.setPrint(false);
 	}
 
 	@Override
@@ -129,8 +138,6 @@ public class Drive extends Subsystem {
 	}
 
 	public void setDriveTrajectory(TrajectoryPoint point) {
-		leftfwdtalon.changeControlMode(TalonControlMode.Speed);
-		rightfwdtalon.changeControlMode(TalonControlMode.Speed);
 		if (point.getCount() != 1) {
 			double leftVel = point.getVel()
 					+ ((lastPoint.getPos() - leftfwdtalon.getPosition()) * Constants.PID.DriveFollowerP);
@@ -139,6 +146,7 @@ public class Drive extends Subsystem {
 			leftfwdtalon.set(leftVel);
 			rightfwdtalon.set(rightVel);
 		}
+		System.out.println(point);
 		lastPoint = point;
 	}
 

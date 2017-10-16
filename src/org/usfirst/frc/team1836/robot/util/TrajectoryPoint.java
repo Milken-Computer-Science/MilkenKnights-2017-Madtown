@@ -14,11 +14,11 @@ public class TrajectoryPoint {
 		this.duration = duration;
 	}
 
-	public double timeMs() {
+	public double getTimeMs() {
 		return getCount() * duration;
 	}
 
-	public double timeS() {
+	public double getTimeS() {
 		return (getCount() * duration) / 1000;
 	}
 
@@ -33,4 +33,8 @@ public class TrajectoryPoint {
 	public double getCount() {
 		return count;
 	}
+
+    public String toString() {
+        return "Time: " + getTimeS() + " X: " + getPos() + " V: " + getVel();
+    }
 }
