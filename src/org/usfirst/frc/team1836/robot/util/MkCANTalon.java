@@ -8,16 +8,16 @@ public class MkCANTalon extends CANTalon {
 
 	protected final double wheelDiameter;
 	protected final int codesPerRev;
-	protected final int conversionFactor;
+	protected final boolean rotation;
 	protected boolean setPrint;
 
 	public MkCANTalon(int deviceNumber, double wheelDiameter, boolean rotation) {
 		super(deviceNumber);
 		this.codesPerRev = Constants.PID.codesPerRev;
-		configEncoderCodesPerRev(codesPerRev);
+		configEncoderCodesPerRev(this.codesPerRev);
 		this.wheelDiameter = wheelDiameter;
 		setPrint = true;
-		conversionFactor = rotation ? 360 : 1;
+		this.rotation = rotation;
 	}
 
 	public double getPosition() {
@@ -32,24 +32,29 @@ public class MkCANTalon extends CANTalon {
 		setEncPosition(userToNative(pos));
 	}
 
-	public void set(double val) {
-		if (getControlMode() == TalonControlMode.Speed || getControlMode() == TalonControlMode.MotionMagic
-				|| getControlMode() == TalonControlMode.Position) {
-			set(userToNative(val));
-		} else {
-			set(val);
+	public void set(double val, double bool) {
+		set(userToNative(val));
+		if (setPrint) {
+			System.out.println("Mode: " + getControlMode().toString() + "Value: ");
 		}
-		System.out.println("Mode: " + getControlMode().toString() + "Value: ");
 	}
 
 	public int userToNative(double val) {
-		return ((int) ((val / (wheelDiameter * Math.PI)) * codesPerRev));
+		if (rotation) {
+			return (int) ((val / 360) * codesPerRev);
+		} else {
+			return (int) Math.round((val / (wheelDiameter * Math.PI)) * codesPerRev);
+		}
 	}
 
 	public double nativeToUser(int val) {
-		return (val / codesPerRev) * (wheelDiameter * Math.PI);
+		if (rotation) {
+			return (val / codesPerRev) * 360;
+		} else {
+			return (val / codesPerRev) * (wheelDiameter * Math.PI);
+		}
 	}
-	
+
 	public void setPrint(boolean val) {
 		this.setPrint = val;
 	}
