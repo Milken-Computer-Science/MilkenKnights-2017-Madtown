@@ -3,7 +3,7 @@ package org.usfirst.frc.team1836.robot;
 public final class Constants {
 
 	public static class Hardware {
-		public static final int LEFT_FWD_TALON_ID = 1;
+		public static final int LEFT_FWD_TALON_ID = 1; 
 		public static final int LEFT_BACK_TALON_ID = 2;
 		public static final int RIGHT_FWD_TALON_ID = 3;
 		public static final int RIGHT_BACK_TALON_ID = 4;
