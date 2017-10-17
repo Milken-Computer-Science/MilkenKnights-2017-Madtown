@@ -20,7 +20,8 @@ public class MkCANTalon extends CANTalon {
 		this.rotation = rotation;
 	}
 
-	public double getPosition() {
+	@Override
+  public double getPosition() {
 		return nativeToUser(getEncPosition());
 	}
 

@@ -34,6 +34,7 @@ public class TrajectoryPoint {
 		return count;
 	}
 
+    @Override
     public String toString() {
         return "Time: " + getTimeS() + " X: " + getPos() + " V: " + getVel();
     }
