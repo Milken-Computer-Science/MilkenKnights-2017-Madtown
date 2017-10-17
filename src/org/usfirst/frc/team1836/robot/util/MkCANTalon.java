@@ -41,7 +41,7 @@ public class MkCANTalon extends CANTalon {
 
 	public int userToNative(double val) {
 		if (rotation) {
-			return (int) ((val / 360) * codesPerRev);
+			return (int) Math.round((val / 360) * codesPerRev);
 		} else {
 			return (int) Math.round((val / (wheelDiameter * Math.PI)) * codesPerRev);
 		}
