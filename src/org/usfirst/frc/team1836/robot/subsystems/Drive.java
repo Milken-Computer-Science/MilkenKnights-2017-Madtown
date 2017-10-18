@@ -3,6 +3,7 @@ package org.usfirst.frc.team1836.robot.subsystems;
 import org.usfirst.frc.team1836.robot.Constants;
 import org.usfirst.frc.team1836.robot.Inputs;
 import org.usfirst.frc.team1836.robot.util.MkCANTalon;
+import org.usfirst.frc.team1836.robot.util.MkGyro;
 import org.usfirst.frc.team1836.robot.util.Subsystem;
 import org.usfirst.frc.team1836.robot.util.TrajectoryPoint;
 
@@ -23,7 +24,7 @@ public class Drive extends Subsystem {
   final MkCANTalon leftbacktalon;
   final MkCANTalon rightfwdtalon;
   final MkCANTalon rightbacktalon;
-  AHRS navX;
+  MkGyro navX;
   PIDController turnController;
 
   private TrajectoryPoint lastPoint;
@@ -36,7 +37,7 @@ public class Drive extends Subsystem {
 
   public Drive() {
     super("Drive");
-    navX = new AHRS(SPI.Port.kMXP);
+    navX = new MkGyro(new AHRS(SPI.Port.kMXP));
     leftfwdtalon =
         new MkCANTalon(Constants.Hardware.LEFT_FWD_TALON_ID, Constants.Drive.WheelDiameter, false);
     leftbacktalon =
@@ -79,9 +80,10 @@ public class Drive extends Subsystem {
     rightfwdtalon.setPrint(false);
     rightbacktalon.setPrint(false);
 
-    turnController = new PIDController(Constants.PID.TurnP, Constants.PID.TurnI, Constants.PID.TurnD, Constants.PID.TurnF, navX, output -> {
-      robotDr.tankDrive(output, -output);
-    });
+    turnController = new PIDController(Constants.PID.TurnP, Constants.PID.TurnI,
+        Constants.PID.TurnD, Constants.PID.TurnF, navX, output -> {
+          robotDr.tankDrive(output, -output);
+        });
     turnController.setInputRange(-180.0f, 180.0f);
     turnController.setOutputRange(-1.0, 1.0);
     turnController.setAbsoluteTolerance(Constants.PID.TurnTol);
@@ -90,6 +92,7 @@ public class Drive extends Subsystem {
 
   @Override
   public void initTeleop() {
+    turnController.disable();
     leftfwdtalon.changeControlMode(TalonControlMode.PercentVbus);
     leftbacktalon.changeControlMode(TalonControlMode.PercentVbus);
     rightfwdtalon.changeControlMode(TalonControlMode.PercentVbus);
@@ -105,6 +108,7 @@ public class Drive extends Subsystem {
 
   @Override
   public void initAuto() {
+    turnController.disable();
     leftfwdtalon.changeControlMode(TalonControlMode.MotionMagic);
     leftbacktalon.changeControlMode(TalonControlMode.Follower);
     leftbacktalon.set(Constants.Hardware.LEFT_FWD_TALON_ID);
@@ -168,6 +172,19 @@ public class Drive extends Subsystem {
     }
     System.out.println(point);
     lastPoint = point;
+  }
+
+  public void setTurnSetpoint(double deg) {
+    turnController.enable();
+    turnController.setSetpoint(deg);
+  }
+
+  public boolean getTurnFinished() {
+    return turnController.onTarget();
+  }
+
+  public void disableTurnController() {
+    turnController.disable();
   }
 
 }
