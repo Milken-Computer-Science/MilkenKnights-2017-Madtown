@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.usfirst.frc.team1836.robot.util.Subsystem;
 
-import edu.wpi.first.wpilibj.DriverStation;
-
 public class Systems {
   private static List<Subsystem> systems = new LinkedList<Subsystem>();
 
@@ -32,12 +30,15 @@ public class Systems {
     }
   }
 
-  public static void init() {
+  public static void initAuto() {
     for (Subsystem e : systems) {
-      if (DriverStation.getInstance().isAutonomous())
-        e.initAuto();
-      else
-        e.initTeleop();
+      e.initAuto();
+    }
+  }
+
+  public static void initTeleop() {
+    for (Subsystem e : systems) {
+      e.initTeleop();
     }
   }
 
