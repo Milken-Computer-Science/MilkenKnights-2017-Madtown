@@ -21,15 +21,10 @@ public class TrapezoidGenerator {
   }
 
   public int generate_profile(double time_delta, double distance, double acceleration,
-      double max_velocity) {
+      double max_velocity) throws Exception {
     double accel_dist = (0.5 * max_velocity * max_velocity / acceleration);
     if (accel_dist * 2 > distance) {
-      try {
-        throw new Exception("error message");
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-      return 0;
+      throw new Exception();
     } else {
       double remaining_distance = distance - (accel_dist * 2);
       double hold_time = remaining_distance / max_velocity;
