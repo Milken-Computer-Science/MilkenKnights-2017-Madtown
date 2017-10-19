@@ -1,8 +1,9 @@
 package org.usfirst.frc.team1836.robot.auto.commands;
 
-import org.usfirst.frc.team1836.robot.auto.routines.MotionProfile;
+import org.usfirst.frc.team1836.robot.Constants;
 import org.usfirst.frc.team1836.robot.subsystems.Drive;
-import org.usfirst.frc.team1836.robot.util.TrajectoryPoint;
+
+import com.team254.lib.trajectory.Main;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,32 +12,33 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class StraightPathFollower extends Command {
 
-  private int cycle;
 
-  public StraightPathFollower() {
+  private final Main m;
+  private final double dist;
+
+  public StraightPathFollower(double dist) {
+    m = new Main();
+    this.dist = dist;
 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    cycle = 0;
+    Drive.getInstance().setDriveTrajectory(m.genTraj(dist, Constants.PID.dt, Constants.PID.mAccel,
+        Constants.PID.mVel, Constants.PID.mJerk), dist);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (cycle < MotionProfile.kNumPoints) {
-      Drive.getInstance().setDriveTrajectory(new TrajectoryPoint(MotionProfile.Points[cycle][0],
-          MotionProfile.Points[cycle][0], cycle + 1, MotionProfile.Points[cycle][2]));
-      cycle++;
-    }
+    Drive.getInstance().setTrajectoryPoint();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return cycle >= MotionProfile.kNumPoints;
+    return Drive.getInstance().getTrajectoryFinished();
   }
 
   // Called once after isFinished returns true

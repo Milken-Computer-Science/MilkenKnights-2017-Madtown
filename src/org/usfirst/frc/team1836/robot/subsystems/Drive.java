@@ -5,11 +5,12 @@ import org.usfirst.frc.team1836.robot.Inputs;
 import org.usfirst.frc.team1836.robot.util.MkCANTalon;
 import org.usfirst.frc.team1836.robot.util.MkGyro;
 import org.usfirst.frc.team1836.robot.util.Subsystem;
-import org.usfirst.frc.team1836.robot.util.TrajectoryPoint;
 
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
+import com.team254.lib.trajectory.Trajectory;
+import com.team254.lib.trajectory.TrajectoryFollower;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -26,9 +27,8 @@ public class Drive extends Subsystem {
   final MkCANTalon rightbacktalon;
   MkGyro navX;
   PIDController turnController;
-
-  private TrajectoryPoint lastPoint;
-
+  private TrajectoryFollower trajFollower;
+  private double trajDist;
   public static Drive getInstance() {
     if (drive == null)
       drive = new Drive();
@@ -109,12 +109,6 @@ public class Drive extends Subsystem {
   @Override
   public void initAuto() {
     turnController.disable();
-    leftfwdtalon.changeControlMode(TalonControlMode.MotionMagic);
-    leftbacktalon.changeControlMode(TalonControlMode.Follower);
-    leftbacktalon.set(Constants.Hardware.LEFT_FWD_TALON_ID);
-    rightfwdtalon.changeControlMode(TalonControlMode.MotionMagic);
-    rightbacktalon.changeControlMode(TalonControlMode.Follower);
-    rightbacktalon.set(Constants.Hardware.RIGHT_BACK_TALON_ID);
     leftfwdtalon.setEncPosition(0);
     rightfwdtalon.setEncPosition(0);
   }
@@ -154,24 +148,50 @@ public class Drive extends Subsystem {
 
   }
 
-  public void setDriveVelocity(double velocity) {
+  public void setVelMode() {
     leftfwdtalon.changeControlMode(TalonControlMode.Speed);
     rightfwdtalon.changeControlMode(TalonControlMode.Speed);
+
+    leftbacktalon.changeControlMode(TalonControlMode.Follower);
+    leftbacktalon.set(Constants.Hardware.LEFT_FWD_TALON_ID);
+
+    rightbacktalon.changeControlMode(TalonControlMode.Follower);
+    rightbacktalon.set(Constants.Hardware.RIGHT_BACK_TALON_ID);
+  }
+
+  public void setMagicMode() {
+    leftfwdtalon.changeControlMode(TalonControlMode.MotionMagic);
+    rightfwdtalon.changeControlMode(TalonControlMode.MotionMagic);
+
+    leftbacktalon.changeControlMode(TalonControlMode.Follower);
+    leftbacktalon.set(Constants.Hardware.LEFT_FWD_TALON_ID);
+
+    rightbacktalon.changeControlMode(TalonControlMode.Follower);
+    rightbacktalon.set(Constants.Hardware.RIGHT_BACK_TALON_ID);
+  }
+
+  public void setDriveVelocity(double velocity) {
     leftfwdtalon.set(velocity);
     rightfwdtalon.set(velocity);
   }
 
-  public void setDriveTrajectory(TrajectoryPoint point) {
-    // if (point.getCount() != 1) {
-    double leftVel = point.getVel()
-        + ((lastPoint.getPos() - leftfwdtalon.getPosition()) * Constants.PID.DriveFollowerP);
-    double rightVel = point.getVel()
-        + ((lastPoint.getPos() - rightfwdtalon.getPosition()) * Constants.PID.DriveFollowerP);
-    leftfwdtalon.set(leftVel);
-    rightfwdtalon.set(rightVel);
-    // }
-    System.out.println(point);
-    lastPoint = point;
+  public void setDriveTrajectory(Trajectory traj, double dist) {
+    trajFollower = new TrajectoryFollower();
+    trajFollower.configure(Constants.PID.DriveFollowerP, Constants.PID.DriveFollowerD,
+        Constants.PID.DriveFollowerV, Constants.PID.DriveFollowerA);
+    trajFollower.setTrajectory(traj);
+    trajDist = dist;
+  }
+
+  public void setTrajectoryPoint() {
+    if (trajFollower != null) {
+      leftfwdtalon.set(trajFollower.calculate(leftfwdtalon.getPosition()));
+      rightfwdtalon.set(trajFollower.calculate(rightfwdtalon.getPosition()));
+    }
+  }
+
+  public boolean getTrajectoryFinished() {
+    return Constants.PID.TrajTol >= Math.abs(trajDist - ((leftfwdtalon.getPosition() + rightfwdtalon.getPosition()) / 2));
   }
 
   public void setTurnSetpoint(double deg) {

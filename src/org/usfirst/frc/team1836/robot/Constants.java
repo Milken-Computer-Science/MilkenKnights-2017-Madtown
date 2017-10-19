@@ -36,7 +36,12 @@ public final class Constants {
     public static final double DriveI = 0;
     public static final double DriveD = 0;
     public static final double DriveF = 0;
+    
     public static final double DriveFollowerP = 0;
+    public static final double DriveFollowerD = 0;
+    public static final double DriveFollowerV = 0;
+    public static final double DriveFollowerA = 0;
+    public static final double TrajTol = 0;
 
     public static final int codesPerRev = 1023;
 
@@ -45,6 +50,11 @@ public final class Constants {
     public static final double TurnD = 0;
     public static final double TurnF = 0;
     public static final double TurnTol = 0;
+    
+    public static final double dt = 0;
+    public static final double mAccel = 0;
+    public static final double mJerk = 0;
+    public static final double mVel = 0;
   }
 
   public static class GearMech {
