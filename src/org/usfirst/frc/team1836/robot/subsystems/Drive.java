@@ -162,14 +162,14 @@ public class Drive extends Subsystem {
   }
 
   public void setDriveTrajectory(TrajectoryPoint point) {
-   // if (point.getCount() != 1) {
-      double leftVel = point.getVel()
-          + ((lastPoint.getPos() - leftfwdtalon.getPosition()) * Constants.PID.DriveFollowerP);
-      double rightVel = point.getVel()
-          + ((lastPoint.getPos() - rightfwdtalon.getPosition()) * Constants.PID.DriveFollowerP);
-      leftfwdtalon.set(leftVel);
-      rightfwdtalon.set(rightVel);
-  //  }
+    // if (point.getCount() != 1) {
+    double leftVel = point.getVel()
+        + ((lastPoint.getPos() - leftfwdtalon.getPosition()) * Constants.PID.DriveFollowerP);
+    double rightVel = point.getVel()
+        + ((lastPoint.getPos() - rightfwdtalon.getPosition()) * Constants.PID.DriveFollowerP);
+    leftfwdtalon.set(leftVel);
+    rightfwdtalon.set(rightVel);
+    // }
     System.out.println(point);
     lastPoint = point;
   }
