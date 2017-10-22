@@ -6,37 +6,37 @@ import java.util.List;
 import org.usfirst.frc.team1836.robot.util.Subsystem;
 
 public class Systems {
-  private static List<Subsystem> systems = new LinkedList<Subsystem>();
+  private List<Subsystem> systems = new LinkedList<Subsystem>();
 
-  public static void addSystem(Subsystem e) {
+  public void addSystem(Subsystem e) {
     systems.add(e);
   }
 
-  public static void updateAuto() {
+  public void updateAuto() {
     for (Subsystem e : systems) {
       e.updateAuto();
     }
   }
 
-  public static void updateTeleop() {
+  public void updateTeleop() {
     for (Subsystem e : systems) {
       e.updateTeleop();
     }
   }
 
-  public static void smartDashboard() {
+  public void smartDashboard() {
     for (Subsystem e : systems) {
       e.sendToSmartDash();
     }
   }
 
-  public static void initAuto() {
+  public void initAuto() {
     for (Subsystem e : systems) {
       e.initAuto();
     }
   }
 
-  public static void initTeleop() {
+  public void initTeleop() {
     for (Subsystem e : systems) {
       e.initTeleop();
     }
