@@ -15,17 +15,24 @@ public class StraightPathFollower extends Command {
 
   private final Main m;
   private final double dist;
+  private final double angle;
 
   public StraightPathFollower(double dist) {
     m = new Main();
     this.dist = dist;
-
+    this.angle = 0;
+  }
+  
+  public StraightPathFollower(double dist, double angle) {
+    m = new Main();
+    this.dist = dist;
+    this.angle = angle;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Drive.getInstance().setDriveTrajectory(m.genTraj(dist, Constants.PID.dt, Constants.PID.mAccel,
+    Drive.getInstance().setDriveTrajectory(m.genTraj(dist, angle, Constants.PID.dt, Constants.PID.mAccel,
         Constants.PID.mVel, Constants.PID.mJerk), dist);
   }
 

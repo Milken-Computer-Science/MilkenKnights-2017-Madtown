@@ -6,7 +6,7 @@ package com.team254.lib.trajectory;
  */
 public class Main {
 
-  public Trajectory genTraj(double dist, double dt, double accel, double vel, double mjerk) {
+  public Trajectory genTraj(double dist, double angle, double dt, double accel, double vel, double mjerk) {
     double t = System.nanoTime();
 
     TrajectoryGenerator.Config config = new TrajectoryGenerator.Config();
@@ -22,7 +22,7 @@ public class Main {
       // Description of this auto mode path.
       WaypointSequence p = new WaypointSequence(10);
       p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-      p.addWaypoint(new WaypointSequence.Waypoint(dist, 0, 0));
+      p.addWaypoint(new WaypointSequence.Waypoint(dist, 0, angle));
       
       Path path = PathGenerator.makePath(p, config, kWheelbaseWidth);
       System.out.println(System.nanoTime() - t);
