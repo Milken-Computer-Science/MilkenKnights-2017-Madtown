@@ -33,7 +33,7 @@ public class MkCANTalon extends CANTalon {
     setEncPosition(userToNative(pos));
   }
 
-  public void set(double val, double bool) {
+  public void set(double val, boolean test) {
     set(userToNative(val));
     if (setPrint) {
       System.out.println("Mode: " + getControlMode().toString() + "Value: ");

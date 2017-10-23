@@ -12,7 +12,6 @@ import com.kauailabs.navx.frc.AHRS;
 import com.team254.lib.trajectory.Trajectory;
 import com.team254.lib.trajectory.TrajectoryFollower;
 
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,9 +25,9 @@ public class Drive extends Subsystem {
   final MkCANTalon rightfwdtalon;
   final MkCANTalon rightbacktalon;
   MkGyro navX;
-  PIDController turnController;
   private TrajectoryFollower trajFollower;
   private double trajDist;
+
   public static Drive getInstance() {
     if (drive == null)
       drive = new Drive();
@@ -79,20 +78,10 @@ public class Drive extends Subsystem {
     leftbacktalon.setPrint(false);
     rightfwdtalon.setPrint(false);
     rightbacktalon.setPrint(false);
-
-    turnController = new PIDController(Constants.PID.TurnP, Constants.PID.TurnI,
-        Constants.PID.TurnD, Constants.PID.TurnF, navX, output -> {
-          robotDr.tankDrive(output, -output);
-        });
-    turnController.setInputRange(-180.0f, 180.0f);
-    turnController.setOutputRange(-1.0, 1.0);
-    turnController.setAbsoluteTolerance(Constants.PID.TurnTol);
-    turnController.setContinuous(true);
   }
 
   @Override
   public void initTeleop() {
-    turnController.disable();
     leftfwdtalon.changeControlMode(TalonControlMode.PercentVbus);
     leftbacktalon.changeControlMode(TalonControlMode.PercentVbus);
     rightfwdtalon.changeControlMode(TalonControlMode.PercentVbus);
@@ -108,7 +97,6 @@ public class Drive extends Subsystem {
 
   @Override
   public void initAuto() {
-    turnController.disable();
     leftfwdtalon.setEncPosition(0);
     rightfwdtalon.setEncPosition(0);
   }
@@ -184,26 +172,20 @@ public class Drive extends Subsystem {
 
   public void setTrajectoryPoint() {
     if (trajFollower != null) {
-      leftfwdtalon.set(trajFollower.calculate(leftfwdtalon.getPosition()));
-      rightfwdtalon.set(trajFollower.calculate(rightfwdtalon.getPosition()));
+      leftfwdtalon.set(trajFollower.calculate(leftfwdtalon.getPosition()), true);
+      rightfwdtalon.set(trajFollower.calculate(rightfwdtalon.getPosition()), true);
+    }
+  }
+  
+  public void setTurnTrajectoryPoint() {
+    if (trajFollower != null) {
+      leftfwdtalon.set(trajFollower.calculate(navX.getYaw()), true);
+      rightfwdtalon.set(-trajFollower.calculate(navX.getYaw()), true);
     }
   }
 
   public boolean getTrajectoryFinished() {
-    return Constants.PID.TrajTol >= Math.abs(trajDist - ((leftfwdtalon.getPosition() + rightfwdtalon.getPosition()) / 2));
+    return trajFollower.isFinishedTrajectory() && (Constants.PID.TrajTol >= Math
+        .abs(trajDist - ((leftfwdtalon.getPosition() + rightfwdtalon.getPosition()) / 2)));
   }
-
-  public void setTurnSetpoint(double deg) {
-    turnController.enable();
-    turnController.setSetpoint(deg);
-  }
-
-  public boolean getTurnFinished() {
-    return turnController.onTarget();
-  }
-
-  public void disableTurnController() {
-    turnController.disable();
-  }
-
 }

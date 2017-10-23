@@ -1,6 +1,9 @@
 package org.usfirst.frc.team1836.robot.auto.commands;
 
+import org.usfirst.frc.team1836.robot.Constants;
 import org.usfirst.frc.team1836.robot.subsystems.Drive;
+
+import com.team254.lib.trajectory.Main;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -8,30 +11,31 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class TurnInPlace extends Command {
-
+  
+  private final Main m;
   private final double deg;
-
+  
   public TurnInPlace(double deg) {
+    m = new Main();
     this.deg = deg;
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Drive.getInstance().setTurnSetpoint(deg);
+    Drive.getInstance().setDriveTrajectory(m.genTraj(deg, Constants.PID.dt, Constants.PID.mAccel,
+        Constants.PID.mVel, Constants.PID.mJerk), deg);
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {}
+  protected void execute() {
+    Drive.getInstance().setTurnTrajectoryPoint();
+  }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Drive.getInstance().getTurnFinished();
+    return Drive.getInstance().getTrajectoryFinished();
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {}
 

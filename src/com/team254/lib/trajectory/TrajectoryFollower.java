@@ -36,8 +36,8 @@ public class TrajectoryFollower {
     if (current_segment < profile_.getNumSegments()) {
       Trajectory.Segment segment = profile_.getSegment(current_segment);
       double error = segment.pos - distance_so_far;
-      double output = kp_ * error + kd_ * ((error - last_error_) / segment.dt - segment.vel)
-          + segment.vel;
+      double output =
+          kp_ * error + kd_ * ((error - last_error_) / segment.dt - segment.vel) + segment.vel;
 
       last_error_ = error;
       current_heading = segment.heading;
@@ -55,4 +55,5 @@ public class TrajectoryFollower {
   public boolean isFinishedTrajectory() {
     return current_segment >= profile_.getNumSegments();
   }
+
 }
