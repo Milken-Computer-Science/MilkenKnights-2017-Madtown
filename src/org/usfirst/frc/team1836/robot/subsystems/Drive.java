@@ -177,8 +177,7 @@ public class Drive extends Subsystem {
 
   public void setDriveTrajectory(Trajectory traj, double dist) {
     trajFollower = new TrajectoryFollower();
-    trajFollower.configure(Constants.PID.DriveFollowerP, Constants.PID.DriveFollowerD,
-        Constants.PID.DriveFollowerV, Constants.PID.DriveFollowerA);
+    trajFollower.configure(Constants.PID.DriveFollowerP, Constants.PID.DriveFollowerD);
     trajFollower.setTrajectory(traj);
     trajDist = dist;
   }

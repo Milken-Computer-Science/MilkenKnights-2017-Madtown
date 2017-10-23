@@ -6,9 +6,9 @@ import java.util.List;
 import org.usfirst.frc.team1836.robot.util.Subsystem;
 
 public class Systems {
-  private List<Subsystem> systems = new LinkedList<Subsystem>();
+  private static List<Subsystem> systems = new LinkedList<Subsystem>();
 
-  public void addSystem(Subsystem e) {
+  public static void addSystem(Subsystem e) {
     systems.add(e);
   }
 
