@@ -16,5 +16,8 @@
 	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>
 	<classpathentry kind="var" path="cscore" sourcepath="cscore.sources"/>
 	<classpathentry kind="lib" path="util/lib/navx_frc.jar"/>
+	<classpathentry kind="lib" path="util/lib/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="util/lib/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/Pathfinder-Java.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
