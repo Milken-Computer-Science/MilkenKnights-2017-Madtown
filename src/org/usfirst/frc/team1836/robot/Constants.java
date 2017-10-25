@@ -1,72 +1,68 @@
 package org.usfirst.frc.team1836.robot;
 
+/**
+ * Stores all Hard-coded numbers subject to change
+ */
 public final class Constants {
 
-  public static class Hardware {
-    public static final int LEFT_FWD_TALON_ID = 1;
-    public static final int LEFT_BACK_TALON_ID = 2;
-    public static final int RIGHT_FWD_TALON_ID = 3;
-    public static final int RIGHT_BACK_TALON_ID = 4;
-    public static final int GEAR_PICKUP_TALON_ID = 5;
-  }
+		public static class Hardware {
+				public static final int LEFT_FWD_TALON_ID = 1;
+				public static final int LEFT_BACK_TALON_ID = 2;
+				public static final int RIGHT_FWD_TALON_ID = 3;
+				public static final int RIGHT_BACK_TALON_ID = 4;
+				public static final int GEAR_PICKUP_TALON_ID = 5;
+		}
 
-  public static class Input {
-    public static final int DRIVE_STICK = 0;
-    public static final int OPERATOR_STICK = 1;
-    public static final int REVERSE_BUTTON = 1;
-    public static final int GEAR_PICKUP_BUTTON = 2;
-    public static final int GEAR_STOW_BUTTON = 3;
-    public static final int GEAR_PLACE_BUTTON = 4;
 
-  }
+		public static class Input {
+				public static final int DRIVE_STICK = 0;
+				public static final int OPERATOR_STICK = 1;
+				public static final int REVERSE_BUTTON = 1;
+				public static final int GEAR_PICKUP_BUTTON = 2;
+				public static final int GEAR_STOW_BUTTON = 3;
+				public static final int GEAR_PLACE_BUTTON = 4;
+		}
 
-  public static class PID {
-    public static final double GearA = 0.75 * 4400;
-    public static final double GearV = 0.75 * 4400;
-    public static final int GearIZone = 400;
-    public static final double GearP = (((0.1 * 1023) / 8000) * 16);
-    public static final double GearI = 0.001;
-    public static final double GearD = ((0.1 * 1023) / 8000) * 160;
-    public static final double GearF = (1.0 * 1023) / (4400 / 60 / 10 * 4096);
 
-    public static final double DriveA = 0;
-    public static final double DriveV = 0;
-    public static final int DriveIZone = 0;
-    public static final double DriveP = 0;
-    public static final double DriveI = 0;
-    public static final double DriveD = 0;
-    public static final double DriveF = 0;
-    
-    public static final double DriveFollowerP = 0;
-    public static final double DriveFollowerD = 0;
-    public static final double DriveFollowerV = 0;
-    public static final double DriveFollowerA = 0;
-    public static final double TrajTol = 0;
+		public static class DRIVE {
 
-    public static final int codesPerRev = 1023;
+				public static final double DRIVE_A = 0;
+				public static final double DRIVE_V = 0;
+				public static final int DRIVE_I_ZONE = 0;
+				public static final double DRIVE_P = 0;
+				public static final double DRIVE_I = 0;
+				public static final double DRIVE_D = 0;
+				public static final double DRIVE_F = 0;
 
-    public static final double TurnP = 0;
-    public static final double TurnI = 0;
-    public static final double TurnD = 0;
-    public static final double TurnF = 0;
-    public static final double TurnTol = 0;
-    
-    public static final double dt = 0;
-    public static final double mAccel = 0;
-    public static final double mJerk = 0;
-    public static final double mVel = 0;
-  }
+				public static final double DRIVE_FOLLOWER_P = 0;
+				public static final double DRIVE_FOLLOWER_D = 0;
+				public static final double TRAJ_TOL = 0;
 
-  public static class GearMech {
-    // From 0 to 10
-    public static final double GearPickup = 10;
-    public static final double GearStow = 5;
-    public static final double GearPlace = 0;
-  }
+				public static final int CODES_PER_REV = 1023;
 
-  public static class Drive {
-    public static final double DriveMagicMotionTol = 1;
-    public static final double WheelDiameter = 6;
-  }
+				public static final double DELTA_T = 0;
+				public static final double M_ACCEL = 0;
+				public static final double M_JERK = 0;
+				public static final double M_VEL = 0;
+
+				public static final double DRIVE_MAGIC_MOTION_TOL = 1;
+				public static final double WHEEL_DIAMETER = 6;
+		}
+
+
+		public static class GearMech {
+				// From 0 to 10
+				public static final double GEAR_PICKUP = 10;
+				public static final double GEAR_STOW = 5;
+				public static final double GEAR_PLACE = 0;
+
+				public static final double GEAR_A = 0.75 * 4400;
+				public static final double GEAR_V = 0.75 * 4400;
+				public static final int GEAR_I_ZONE = 400;
+				public static final double GEAR_P = (((0.1 * 1023) / 8000) * 16);
+				public static final double GEAR_I = 0.001;
+				public static final double GEAR_D = ((0.1 * 1023) / 8000) * 160;
+				public static final double GEAR_F = (1.0 * 1023) / (4400 / 60 / 10 * 4096);
+		}
 
 }

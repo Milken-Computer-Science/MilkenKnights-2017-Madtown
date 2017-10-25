@@ -11,61 +11,62 @@ import com.team254.lib.util.ChezyMath;
  */
 public class WaypointSequence {
 
-  public static class Waypoint {
+		Waypoint[] waypoints_;
+		int num_waypoints_;
 
-    public Waypoint(double x, double y, double theta) {
-      this.x = x;
-      this.y = y;
-      this.theta = theta;
-    }
+		public WaypointSequence(int max_size) {
+				waypoints_ = new Waypoint[max_size];
+		}
 
-    public Waypoint(Waypoint tocopy) {
-      this.x = tocopy.x;
-      this.y = tocopy.y;
-      this.theta = tocopy.theta;
-    }
+		public void addWaypoint(Waypoint w) {
+				if (num_waypoints_ < waypoints_.length) {
+						waypoints_[num_waypoints_] = w;
+						++num_waypoints_;
+				}
+		}
 
-    public double x;
-    public double y;
-    public double theta;
-  }
+		public int getNumWaypoints() {
+				return num_waypoints_;
+		}
 
-  Waypoint[] waypoints_;
-  int num_waypoints_;
+		public Waypoint getWaypoint(int index) {
+				if (index >= 0 && index < getNumWaypoints()) {
+						return waypoints_[index];
+				} else {
+						return null;
+				}
+		}
 
-  public WaypointSequence(int max_size) {
-    waypoints_ = new Waypoint[max_size];
-  }
+		public WaypointSequence invertY() {
+				WaypointSequence inverted = new WaypointSequence(waypoints_.length);
+				inverted.num_waypoints_ = num_waypoints_;
+				for (int i = 0; i < num_waypoints_; ++i) {
+						inverted.waypoints_[i] = waypoints_[i];
+						inverted.waypoints_[i].y *= -1;
+						inverted.waypoints_[i].theta =
+								ChezyMath.boundAngle0to2PiRadians(2 * Math.PI - inverted.waypoints_[i].theta);
+				}
 
-  public void addWaypoint(Waypoint w) {
-    if (num_waypoints_ < waypoints_.length) {
-      waypoints_[num_waypoints_] = w;
-      ++num_waypoints_;
-    }
-  }
+				return inverted;
+		}
 
-  public int getNumWaypoints() {
-    return num_waypoints_;
-  }
 
-  public Waypoint getWaypoint(int index) {
-    if (index >= 0 && index < getNumWaypoints()) {
-      return waypoints_[index];
-    } else {
-      return null;
-    }
-  }
+		public static class Waypoint {
 
-  public WaypointSequence invertY() {
-    WaypointSequence inverted = new WaypointSequence(waypoints_.length);
-    inverted.num_waypoints_ = num_waypoints_;
-    for (int i = 0; i < num_waypoints_; ++i) {
-      inverted.waypoints_[i] = waypoints_[i];
-      inverted.waypoints_[i].y *= -1;
-      inverted.waypoints_[i].theta =
-          ChezyMath.boundAngle0to2PiRadians(2 * Math.PI - inverted.waypoints_[i].theta);
-    }
+				public double x;
+				public double y;
+				public double theta;
 
-    return inverted;
-  }
+				public Waypoint(double x, double y, double theta) {
+						this.x = x;
+						this.y = y;
+						this.theta = theta;
+				}
+
+				public Waypoint(Waypoint tocopy) {
+						this.x = tocopy.x;
+						this.y = tocopy.y;
+						this.theta = tocopy.theta;
+				}
+		}
 }
