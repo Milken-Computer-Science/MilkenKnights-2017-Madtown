@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class NoAuto extends CommandGroup {
 
-		public NoAuto() {
+    public NoAuto() {
 
-		}
+    }
 }

@@ -2,29 +2,25 @@ package org.usfirst.frc.team1836.robot.auto.commands;
 
 import com.team254.lib.trajectory.Main;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1836.robot.Constants;
 import org.usfirst.frc.team1836.robot.auto.paths.CenterAutoPath;
 import org.usfirst.frc.team1836.robot.subsystems.Drive;
 
 /**
  *
  */
-public class StraightPathFollower extends Command {
-
+public class CenterPathFollower extends Command {
 
     private final Main m;
-    private final double dist;
 
-    public StraightPathFollower(double dist) {
+    public CenterPathFollower() {
         m = new Main();
-        this.dist = dist;
     }
 
     // Called just before this Command runs the first time
     @Override protected void initialize() {
-       Drive.getInstance().setDriveTrajectory(
-            m.genTraj(dist, Constants.DRIVE.DELTA_T, Constants.DRIVE.M_ACCEL, Constants.DRIVE.M_VEL,
-                Constants.DRIVE.M_JERK), dist);
+        CenterAutoPath x = new CenterAutoPath();
+        Drive.getInstance().setDriveTrajectory(x,
+            x.getLeftWheelTrajectory().getSegment(x.getLeftWheelTrajectory().getNumSegments()).pos);
     }
 
     // Called repeatedly when this Command is scheduled to run
