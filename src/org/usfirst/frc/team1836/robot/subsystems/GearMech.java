@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1836.robot.subsystems;
 
-import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import org.usfirst.frc.team1836.robot.Constants;

@@ -36,6 +36,7 @@ public class MkCANTalon extends CANTalon {
         setEncPosition(userToNative(pos));
     }
 
+    @Override
     public void set(double val) {
         super.set(userToNative(val));
         if (setPrint)

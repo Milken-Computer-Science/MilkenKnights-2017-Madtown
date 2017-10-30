@@ -10,6 +10,7 @@ import com.team254.lib.trajectory.Trajectory;
  */
 public class TextFileDeserializer implements IPathDeserializer {
 
+  @Override
   public Path deserialize(String serialized) {
     StringTokenizer tokenizer = new StringTokenizer(serialized, "\n");
     System.out.println("Parsing path string...");

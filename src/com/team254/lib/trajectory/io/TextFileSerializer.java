@@ -28,6 +28,7 @@ public class TextFileSerializer implements IPathSerializer {
    * @param path The path to serialize.
    * @return A string representation.
    */
+  @Override
   public String serialize(Path path) {
     String content = path.getName() + "\n";
     path.goLeft();

@@ -18,6 +18,7 @@ public class JavaSerializer implements IPathSerializer {
    * @param path The path to serialize.
    * @return A complete Java file as a string.
    */
+  @Override
   public String serialize(Path path) {
     String contents = "package com.team254.frc2014.paths;\n\n";
     contents += "import com.team254.lib.trajectory.Trajectory;\n";
