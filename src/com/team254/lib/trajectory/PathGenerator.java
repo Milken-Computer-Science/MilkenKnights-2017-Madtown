@@ -18,10 +18,12 @@ public class PathGenerator {
      * @param name            The name of the new path. THIS MUST BE A VALID JAVA CLASS NAME
      * @return The path.
      */
-    public static Path makePath(WaypointSequence waypoints, TrajectoryGenerator.Config config,
-        double wheelbase_width) {
-        return new Path(generateLeftAndRightFromSeq(waypoints, config, wheelbase_width));
-    }
+  public static Path makePath(WaypointSequence waypoints, 
+      TrajectoryGenerator.Config config, double wheelbase_width, 
+      String name) {
+return new Path(name, 
+        generateLeftAndRightFromSeq(waypoints, config, wheelbase_width));
+}
 
     static Trajectory.Pair generateLeftAndRightFromSeq(WaypointSequence path,
         TrajectoryGenerator.Config config, double wheelbase_width) {

@@ -23,7 +23,7 @@ public class Main {
             p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
             p.addWaypoint(new WaypointSequence.Waypoint(dist, 0, 0));
 
-            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth);
+            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, "CenterAutoPath");
             System.out.println(System.nanoTime() - t);
             return path;
         }

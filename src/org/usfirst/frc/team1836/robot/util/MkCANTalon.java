@@ -2,7 +2,6 @@ package org.usfirst.frc.team1836.robot.util;
 
 import com.ctre.CANTalon;
 import org.usfirst.frc.team1836.robot.Constants;
-import sun.nio.cs.ext.TIS_620;
 
 public class MkCANTalon extends CANTalon {
 
