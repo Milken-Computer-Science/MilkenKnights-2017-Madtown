@@ -44,11 +44,12 @@ public class TrajectoryFollower {
      */
     public double calculate(double distance_so_far, double gyroHeading, int side) {
         if (current_segment < profile_.getNumSegments()) {
-            double seg = (customRound(System.nanoTime() - Dt) / 0.02);
-            Trajectory.Segment segment = profile_.getSegment((int)seg);
+            double seg = (customRound((System.nanoTime() - Dt) * 1e-9) / 0.02);
+            Trajectory.Segment segment = profile_.getSegment((int) seg);
             double error = segment.pos - distance_so_far;
-            double output = kp_ * error + kd_ * ((error - last_error_) / segment.dt - segment.vel)
-                + segment.vel + (Math.abs(segment.heading - gyroHeading) * kAng_ * side);
+            double output =
+                kp_ * error + kd_ * ((error - last_error_) / segment.dt - segment.vel) + segment.vel
+                    + (Math.abs(segment.heading - gyroHeading) * kAng_ * side);
 
             last_error_ = error;
             current_heading = segment.heading;
