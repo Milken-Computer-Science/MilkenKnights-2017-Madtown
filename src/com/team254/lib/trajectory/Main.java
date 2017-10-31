@@ -6,7 +6,7 @@ package com.team254.lib.trajectory;
 public class Main {
 
     public Path genTraj(double dist, double dt, double accel, double vel, double mjerk) {
-        double t = System.nanoTime();
+
 
         TrajectoryGenerator.Config config = new TrajectoryGenerator.Config();
 
@@ -24,7 +24,6 @@ public class Main {
             p.addWaypoint(new WaypointSequence.Waypoint(dist, 0, 0));
 
             Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, "CenterAutoPath");
-            System.out.println(System.nanoTime() - t);
             return path;
         }
     }

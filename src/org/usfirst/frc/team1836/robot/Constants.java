@@ -40,7 +40,7 @@ public final class Constants {
 
         public static final double TRAJ_TOL = 0;
 
-        public static final int CODES_PER_REV = 1023;
+        public static final int CODES_PER_REV = 4096;
 
         public static final double DELTA_T = 0;
         public static final double M_ACCEL = 0;
@@ -54,17 +54,18 @@ public final class Constants {
 
     public static class GearMech {
         // From 0 to 10
-        public static final double GEAR_PICKUP = 10;
-        public static final double GEAR_STOW = 5;
+        public static final double GEAR_PICKUP = 120;
+        public static final double GEAR_STOW = 70;
         public static final double GEAR_PLACE = 0;
 
-        public static final double GEAR_A = 0.75 * 4400;
-        public static final double GEAR_V = 0.75 * 4400;
+        public static final double MAX_ROTATIONS = 1.5; //Per sec
+        public static final double GEAR_A = 0.75 * MAX_ROTATIONS;
+        public static final double GEAR_V = 0.75 * MAX_ROTATIONS;
         public static final int GEAR_I_ZONE = 400;
         public static final double GEAR_P = (((0.1 * 1023) / 8000) * 16);
         public static final double GEAR_I = 0.001;
         public static final double GEAR_D = ((0.1 * 1023) / 8000) * 160;
-        public static final double GEAR_F = (1.0 * 1023) / (4400 / 60 / 10 * 4096);
+        public static final double GEAR_F = 1.2487792969;
     }
 
 }

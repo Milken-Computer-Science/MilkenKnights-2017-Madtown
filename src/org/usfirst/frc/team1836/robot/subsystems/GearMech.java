@@ -9,8 +9,8 @@ import org.usfirst.frc.team1836.robot.util.Subsystem;
 
 public class GearMech extends Subsystem {
 
-    MkCANTalon gearTalon = new MkCANTalon(Constants.Hardware.GEAR_PICKUP_TALON_ID, true);
-    GearMechanismState gearMechState;
+    private MkCANTalon gearTalon = new MkCANTalon(Constants.Hardware.GEAR_PICKUP_TALON_ID, true);
+    private GearMechanismState gearMechState;
 
 
     public GearMech() {
@@ -71,7 +71,7 @@ public class GearMech extends Subsystem {
             Constants.GearMech.GEAR_PLACE);
         public final double state;
 
-        private GearMechanismState(final double state) {
+        GearMechanismState(final double state) {
             this.state = state;
         }
     }

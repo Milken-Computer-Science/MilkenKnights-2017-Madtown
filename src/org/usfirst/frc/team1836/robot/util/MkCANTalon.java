@@ -10,6 +10,8 @@ public class MkCANTalon extends CANTalon {
     private final boolean rotation;
     private boolean setPrint = true;
 
+
+
     public MkCANTalon(int deviceNumber, double wheelDiameter) {
         super(deviceNumber);
         configEncoderCodesPerRev(codesPerRev);
@@ -28,19 +30,26 @@ public class MkCANTalon extends CANTalon {
         return nativeToUser(getEncPosition());
     }
 
+    /*
+    @return User Unit Velocity In Seconds
+     */
     public double getVelocity() {
-        return nativeToUser(getEncVelocity());
+        return nativeToUser(getEncVelocity()) * 10;
     }
 
     public void setEncoderPosition(double pos) {
         setEncPosition(userToNative(pos));
     }
 
-    @Override
-    public void set(double val) {
-        super.set(userToNative(val));
+    @Override public void set(double val) {
+        if (getControlMode().equals(TalonControlMode.Speed)) {
+            super.set(userToNative(val) / 100);
+        } else {
+            super.set(userToNative(val));
+        }
+
         if (setPrint)
-            System.out.println("Mode: " + getControlMode().toString() + "Value: ");
+            System.out.println("Mode: " + getControlMode().toString() + " Value: " + val);
     }
 
     private int userToNative(double val) {

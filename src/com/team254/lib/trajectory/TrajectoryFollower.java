@@ -14,6 +14,9 @@ public class TrajectoryFollower {
     private double current_heading = 0;
     private int current_segment;
     private Trajectory profile_;
+    double Dt;
+
+
 
     public TrajectoryFollower() {
 
@@ -32,6 +35,7 @@ public class TrajectoryFollower {
 
     public void setTrajectory(Trajectory profile) {
         profile_ = profile;
+        Dt = System.nanoTime();
     }
 
     /*
@@ -40,7 +44,8 @@ public class TrajectoryFollower {
      */
     public double calculate(double distance_so_far, double gyroHeading, int side) {
         if (current_segment < profile_.getNumSegments()) {
-            Trajectory.Segment segment = profile_.getSegment(current_segment);
+            double seg = (customRound(System.nanoTime() - Dt) / 0.02);
+            Trajectory.Segment segment = profile_.getSegment((int)seg);
             double error = segment.pos - distance_so_far;
             double output = kp_ * error + kd_ * ((error - last_error_) / segment.dt - segment.vel)
                 + segment.vel + (Math.abs(segment.heading - gyroHeading) * kAng_ * side);
@@ -60,6 +65,10 @@ public class TrajectoryFollower {
 
     public boolean isFinishedTrajectory() {
         return current_segment >= profile_.getNumSegments();
+    }
+
+    public double customRound(double num) {
+        return Math.round(num * 50) / 50.0;
     }
 
 }
