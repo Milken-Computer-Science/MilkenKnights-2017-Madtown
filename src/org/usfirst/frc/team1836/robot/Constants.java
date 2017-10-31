@@ -53,10 +53,10 @@ public final class Constants {
 
 
     public static class GearMech {
-        // From 0 to 10
+        //Degrees - Zeroed on Stow
         public static final double GEAR_PICKUP = 120;
-        public static final double GEAR_STOW = 70;
-        public static final double GEAR_PLACE = 0;
+        public static final double GEAR_PLACE = 60;
+        public static final double GEAR_STOW = 0;
 
         public static final double MAX_ROTATIONS = 1.5; //Per sec
         public static final double GEAR_A = 0.75 * MAX_ROTATIONS;
