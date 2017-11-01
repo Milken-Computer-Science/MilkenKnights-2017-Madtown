@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import org.usfirst.frc.team1836.robot.auto.commandgroups.MagicCenterAuto;
 import org.usfirst.frc.team1836.robot.auto.commandgroups.NoAuto;
+import org.usfirst.frc.team1836.robot.auto.commands.CenterPathFollower;
 import org.usfirst.frc.team1836.robot.subsystems.Drive;
 
 public class Robot extends IterativeRobot {
@@ -15,6 +17,8 @@ public class Robot extends IterativeRobot {
     @Override public void robotInit() {
         Drive.getInstance();
         mainAutoChooser.addObject("No Auto", new NoAuto());
+        mainAutoChooser.addObject("Center Auto - Trajectory", new CenterPathFollower());
+        mainAutoChooser.addObject("Center Auto - Magic Motion", new MagicCenterAuto());
         system = new Systems();
     }
 

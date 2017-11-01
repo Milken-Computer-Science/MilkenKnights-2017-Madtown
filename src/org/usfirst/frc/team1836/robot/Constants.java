@@ -11,6 +11,14 @@ public final class Constants {
         public static final int RIGHT_FWD_TALON_ID = 8;
         public static final int RIGHT_BACK_TALON_ID = 7;
         public static final int GEAR_PICKUP_TALON_ID = 4;
+
+        public static final boolean LEFT_FWD_TALON_SENSOR_REVERSE = false;
+        public static final boolean RIGHT_FWD_TALON_SENSOR_REVERSE = false;
+
+        public static final boolean LEFT_FWD_TALON_REVERSE = false;
+        public static final boolean LEFT_BACK_TALON_REVERSE = false;
+        public static final boolean RIGHT_FWD_TALON_REVERSE = false;
+        public static final boolean RIGHT_BACK_TALON_REVERSE = false;
     }
 
 
@@ -66,6 +74,11 @@ public final class Constants {
         public static final double GEAR_I = 0.001;
         public static final double GEAR_D = ((0.1 * 1023) / 8000) * 160;
         public static final double GEAR_F = 1.2487792969;
+    }
+
+
+    public static class Auto {
+        public static final double CENTER_AUTO_DISTANCE = 90;
     }
 
 }

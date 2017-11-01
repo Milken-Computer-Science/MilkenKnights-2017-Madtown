@@ -39,7 +39,7 @@ public class Drive extends Subsystem {
         robotDr = new RobotDrive(leftfwdtalon, leftbacktalon, rightfwdtalon, rightbacktalon);
 
         leftfwdtalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-        leftfwdtalon.reverseSensor(false);
+        leftfwdtalon.reverseSensor(Hardware.LEFT_FWD_TALON_SENSOR_REVERSE);
         leftfwdtalon.configNominalOutputVoltage(+0.0f, -0.0f);
         leftfwdtalon.configPeakOutputVoltage(+12.0f, -12.0f);
         leftfwdtalon.setProfile(0);
@@ -51,8 +51,10 @@ public class Drive extends Subsystem {
         leftfwdtalon.setMotionMagicCruiseVelocity(DRIVE.DRIVE_V);
         leftfwdtalon.setMotionMagicAcceleration(DRIVE.DRIVE_A);
 
+
+
         rightfwdtalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-        rightfwdtalon.reverseSensor(false);
+        rightfwdtalon.reverseSensor(Hardware.RIGHT_FWD_TALON_SENSOR_REVERSE);
         rightfwdtalon.configNominalOutputVoltage(+0.0f, -0.0f);
         rightfwdtalon.configPeakOutputVoltage(+12.0f, -12.0f);
         rightfwdtalon.setProfile(0);
@@ -63,6 +65,11 @@ public class Drive extends Subsystem {
         rightfwdtalon.setIZone(DRIVE.DRIVE_I_ZONE);
         rightfwdtalon.setMotionMagicCruiseVelocity(DRIVE.DRIVE_V);
         rightfwdtalon.setMotionMagicAcceleration(DRIVE.DRIVE_A);
+
+        leftfwdtalon.reverseOutput(Hardware.LEFT_FWD_TALON_REVERSE);
+        leftbacktalon.reverseOutput(Hardware.LEFT_BACK_TALON_REVERSE);
+        rightfwdtalon.reverseOutput(Hardware.RIGHT_FWD_TALON_REVERSE);
+        rightbacktalon.reverseOutput(Hardware.RIGHT_BACK_TALON_REVERSE);
 
         leftfwdtalon.setPrint(false);
         leftbacktalon.setPrint(false);
@@ -78,7 +85,7 @@ public class Drive extends Subsystem {
 
     @Override public void updateTeleop() {
         robotDr
-            .arcadeDrive(Inputs.driverJoystick.getRawAxis(1), Inputs.driverJoystick.getRawAxis(2));
+            .arcadeDrive(-Inputs.driverJoystick.getRawAxis(1), Inputs.driverJoystick.getRawAxis(2));
     }
 
     @Override public void updateAuto() {
@@ -130,16 +137,16 @@ public class Drive extends Subsystem {
     private void setMagicMode() {
         leftfwdtalon.changeControlMode(TalonControlMode.MotionMagic);
         rightfwdtalon.changeControlMode(TalonControlMode.MotionMagic);
-
         setFollowerMode();
     }
 
     public void setDriveTrajectory(Path traj, double dist) {
         leftfwdtalon.changeControlMode(TalonControlMode.Speed);
         rightfwdtalon.changeControlMode(TalonControlMode.Speed);
-
+        setFollowerMode();
         trajFollower = new TrajectoryFollower();
-        trajFollower.configure(DRIVE.DRIVE_FOLLOWER_P, DRIVE.DRIVE_FOLLOWER_D, DRIVE.DRIVE_FOLLOWER_ANG);
+        trajFollower
+            .configure(DRIVE.DRIVE_FOLLOWER_P, DRIVE.DRIVE_FOLLOWER_D, DRIVE.DRIVE_FOLLOWER_ANG);
         trajFollower.setTrajectory(traj.getLeftWheelTrajectory());
         trajectoryDist = dist;
     }
@@ -147,7 +154,8 @@ public class Drive extends Subsystem {
     public void setTrajectoryPoint() {
         if (trajFollower != null) {
             leftfwdtalon.set(trajFollower.calculate(leftfwdtalon.getPosition(), navX.getYaw(), 1));
-            rightfwdtalon.set(trajFollower.calculate(rightfwdtalon.getPosition(), navX.getYaw(), -1));
+            rightfwdtalon
+                .set(trajFollower.calculate(rightfwdtalon.getPosition(), navX.getYaw(), -1));
         }
     }
 

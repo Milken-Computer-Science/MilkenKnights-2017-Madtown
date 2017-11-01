@@ -7,6 +7,7 @@ package com.team254.lib.trajectory;
  */
 public class TrajectoryFollower {
 
+    double Dt;
     private double kp_;
     private double kd_;
     private double kAng_;
@@ -14,7 +15,6 @@ public class TrajectoryFollower {
     private double current_heading = 0;
     private int current_segment;
     private Trajectory profile_;
-    double Dt;
 
 
 
