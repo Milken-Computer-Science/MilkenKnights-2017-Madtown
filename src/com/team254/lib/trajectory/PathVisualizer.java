@@ -1,7 +1,7 @@
 package com.team254.lib.trajectory;
 
 import com.team254.lib.trajectory.Trajectory.Segment;
-import org.jfree.chart.ChartFactory;
+/*import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -14,10 +14,12 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.ApplicationFrame;
 
-import java.awt.*;
+import java.awt.*; */
 
-@SuppressWarnings("serial") public class PathVisualizer extends ApplicationFrame {
+/*@SuppressWarnings("serial") */ public class PathVisualizer /*extends ApplicationFrame*/ {
 
+
+/*
     public PathVisualizer(String applicationTitle, String chartTitle, Trajectory traj1,
         Trajectory traj2) {
         super(applicationTitle);
@@ -121,5 +123,5 @@ import java.awt.*;
         dataset.addSeries(vel);
         dataset.addSeries(acc);
         return dataset;
-    }
+    } */
 }

@@ -15,7 +15,7 @@ public final class Constants {
         public static final boolean GEAR_ARM_TALON_SENSOR_REVERSE = false;
         public static final boolean GEAR_ARM_TALON_REVERSE = false;
 
-        public static final boolean LEFT_FWD_TALON_SENSOR_REVERSE = false;
+        public static final boolean LEFT_FWD_TALON_SENSOR_REVERSE = true;
         public static final boolean RIGHT_FWD_TALON_SENSOR_REVERSE = false;
 
         public static final boolean LEFT_FWD_TALON_REVERSE = false;
@@ -59,7 +59,7 @@ public final class Constants {
         public static final double M_VEL = 0;
 
         public static final double DRIVE_MAGIC_MOTION_TOL = 1;
-        public static final double WHEEL_DIAMETER = 6;
+        public static final double WHEEL_DIAMETER = 4;
     }
 
 

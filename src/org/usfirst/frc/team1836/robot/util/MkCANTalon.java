@@ -44,10 +44,12 @@ public class MkCANTalon extends CANTalon {
     @Override public void set(double val) {
         if (getControlMode().equals(TalonControlMode.Speed)) {
             super.set(userToNative(val) / 100);
-        } else {
+        } else if(getControlMode().equals(TalonControlMode.MotionMagic)){
             super.set(userToNative(val));
         }
-
+        else{
+          super.set(val);
+        }
         if (setPrint)
             System.out.println("Mode: " + getControlMode().toString() + " Value: " + val);
     }

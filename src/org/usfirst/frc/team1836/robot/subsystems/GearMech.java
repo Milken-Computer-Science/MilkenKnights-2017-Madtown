@@ -2,6 +2,9 @@ package org.usfirst.frc.team1836.robot.subsystems;
 
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team1836.robot.Constants;
 import org.usfirst.frc.team1836.robot.Inputs;
 import org.usfirst.frc.team1836.robot.util.MkCANTalon;
@@ -55,7 +58,7 @@ public class GearMech extends Subsystem {
     }
 
     @Override public void sendToSmartDash() {
-
+      SmartDashboard.putNumber("Arm Encoder Position", gearTalon.getEncPosition());
     }
 
     public void set(GearMechanismState state) {
