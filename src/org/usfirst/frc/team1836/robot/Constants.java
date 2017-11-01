@@ -12,6 +12,9 @@ public final class Constants {
         public static final int RIGHT_BACK_TALON_ID = 7;
         public static final int GEAR_PICKUP_TALON_ID = 4;
 
+        public static final boolean GEAR_ARM_TALON_SENSOR_REVERSE = false;
+        public static final boolean GEAR_ARM_TALON_REVERSE = false;
+
         public static final boolean LEFT_FWD_TALON_SENSOR_REVERSE = false;
         public static final boolean RIGHT_FWD_TALON_SENSOR_REVERSE = false;
 

@@ -17,7 +17,8 @@ public class GearMech extends Subsystem {
         super("Gear Pickup");
         gearMechState = GearMechanismState.STOW;
         gearTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-        gearTalon.reverseSensor(false);
+        gearTalon.reverseSensor(Constants.Hardware.GEAR_ARM_TALON_SENSOR_REVERSE);
+        gearTalon.reverseOutput(Constants.Hardware.GEAR_ARM_TALON_REVERSE);
         gearTalon.configNominalOutputVoltage(+0.0f, -0.0f);
         gearTalon.configPeakOutputVoltage(+12.0f, -12.0f);
         gearTalon.setProfile(0);
@@ -32,13 +33,13 @@ public class GearMech extends Subsystem {
 
     @Override public void updateTeleop() {
         if (Inputs.gearPickupButton.isPressed()) {
-            gearMechState = GearMechanismState.PICKUP;
+            set(GearMechanismState.PICKUP);
         } else if (Inputs.gearStowButton.isPressed()) {
-            gearMechState = GearMechanismState.STOW;
+            set(GearMechanismState.STOW);
         } else if (Inputs.gearPlaceButton.isPressed()) {
-            gearMechState = GearMechanismState.PLACE;
+            set(GearMechanismState.PLACE);
         }
-        set(gearMechState);
+
     }
 
     @Override public void updateAuto() {
@@ -57,12 +58,8 @@ public class GearMech extends Subsystem {
 
     }
 
-    public void setState(GearMechanismState state) {
-        gearMechState = state;
-        set(gearMechState);
-    }
-
     public void set(GearMechanismState state) {
+        gearMechState = state;
         gearTalon.set(state.state);
     }
 
