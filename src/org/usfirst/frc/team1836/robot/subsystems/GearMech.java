@@ -12,96 +12,101 @@ import org.usfirst.frc.team1836.robot.util.MkCANTalon;
 import org.usfirst.frc.team1836.robot.util.Subsystem;
 
 public class GearMech extends Subsystem {
-    private static GearMech gearMech;
-    private CANTalon gearTalon;
-    private MkCANTalon rollerTalon;
-    private GearMechanismState gearMechState;
+  private static GearMech gearMech;
+  private CANTalon gearTalon;
+  private MkCANTalon rollerTalon;
+  @SuppressWarnings("unused")
+  private GearMechanismState gearMechState;
 
 
-    public GearMech() {
-        super("GEARMECH");
-        gearTalon = new CANTalon(Constants.Hardware.GEAR_PICKUP_TALON_ID);
-        gearTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-        gearTalon.reverseSensor(Constants.Hardware.GEAR_ARM_TALON_SENSOR_REVERSE);
-        gearTalon.reverseOutput(Constants.Hardware.GEAR_ARM_TALON_REVERSE);
-        gearTalon.configNominalOutputVoltage(+0.0f, 0.0f);
-        gearTalon.configPeakOutputVoltage(12.0f, -12.0f);
-        gearTalon.setProfile(0);
-        gearTalon.setF(Constants.GearMech.GEAR_F);
-        gearTalon.setP(Constants.GearMech.GEAR_P);
-        gearTalon.setI(Constants.GearMech.GEAR_I);
-        gearTalon.setD(Constants.GearMech.GEAR_D);
-        gearTalon.setIZone(Constants.GearMech.GEAR_I_ZONE);
-        gearTalon.setMotionMagicCruiseVelocity(Constants.GearMech.GEAR_V);
-        gearTalon.setMotionMagicAcceleration(Constants.GearMech.GEAR_A); 
-        gearMechState = GearMechanismState.STOW; 
-        
-        rollerTalon = new MkCANTalon(Constants.Hardware.ROLLER_TALON_ID, false);
-        rollerTalon.reverseOutput(Constants.Hardware.ROLLER_TALON_REVERSE);
-        rollerTalon.setPrint(false);
+  public GearMech() {
+    super("GEARMECH");
+    gearTalon = new CANTalon(Constants.Hardware.GEAR_PICKUP_TALON_ID);
+    gearTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+    gearTalon.reverseSensor(Constants.Hardware.GEAR_ARM_TALON_SENSOR_REVERSE);
+    gearTalon.reverseOutput(Constants.Hardware.GEAR_ARM_TALON_REVERSE);
+    gearTalon.configNominalOutputVoltage(+0.0f, 0.0f);
+    gearTalon.configPeakOutputVoltage(12.0f, -12.0f);
+    gearTalon.setProfile(0);
+    gearTalon.setF(Constants.GearMech.GEAR_F);
+    gearTalon.setP(Constants.GearMech.GEAR_P);
+    gearTalon.setI(Constants.GearMech.GEAR_I);
+    gearTalon.setD(Constants.GearMech.GEAR_D);
+    gearTalon.setIZone(Constants.GearMech.GEAR_I_ZONE);
+    gearTalon.setMotionMagicCruiseVelocity(Constants.GearMech.GEAR_V);
+    gearTalon.setMotionMagicAcceleration(Constants.GearMech.GEAR_A);
+    gearMechState = GearMechanismState.STOW;
+
+    rollerTalon = new MkCANTalon(Constants.Hardware.ROLLER_TALON_ID, false);
+    rollerTalon.reverseOutput(Constants.Hardware.ROLLER_TALON_REVERSE);
+    rollerTalon.setPrint(false);
+  }
+
+  public static GearMech getInstance() {
+    if (gearMech == null) {
+      gearMech = new GearMech();
     }
-    public static GearMech getInstance() {
-      if (gearMech == null){
-        gearMech = new GearMech();
-      }
-      return gearMech;
-    }
+    return gearMech;
+  }
 
-    @Override public void updateTeleop() {
-     if (Inputs.gearPickupButton.isHeld()) {
-           //set(GearMechanismState.PICKUP);
-       gearTalon.changeControlMode(TalonControlMode.MotionMagic);
-       gearTalon.set(50);
-
-       System.out.println(gearTalon.getClosedLoopError() + "Error");
-       System.out.println(gearTalon.getOutputVoltage() / gearTalon.getBusVoltage() + " Voltage");
-        } else if (Inputs.gearStowButton.isPressed()) {
-           set(GearMechanismState.STOW);
-        } else if (Inputs.gearPlaceButton.isPressed()) {
-           set(GearMechanismState.PLACE);
-        } 
-     
-     if(Inputs.rollerInButton.isHeld()){
-       rollerTalon.set(1);
-     }
-     else if(Inputs.rollerOutButton.isHeld()) {
-       rollerTalon.set(-1);
-     }
-
-
-    }
-
-    @Override public void updateAuto() {
-
-    }
-
-    @Override public void initTeleop() {
-      gearTalon.setPosition(0);
+  @Override
+  public void updateTeleop() {
+    /*
+     * if (Inputs.gearPickupButton.isPressed()) { set(GearMechanismState.PICKUP); } else if
+     * (Inputs.gearStowButton.isPressed()) { set(GearMechanismState.STOW); } else if
+     * (Inputs.gearPlaceButton.isPressed()) { set(GearMechanismState.PLACE); }
+     */
+    if (Inputs.gearPickupButton.isHeld()) {
       gearTalon.changeControlMode(TalonControlMode.MotionMagic);
+      gearTalon.set(Inputs.operatorJoystick.getRawAxis(1) * 10);
+      System.out.println(gearTalon.getClosedLoopError() + "Error");
+      System.out.println(gearTalon.getOutputVoltage() / gearTalon.getBusVoltage() + " Voltage");
     }
 
-    @Override public void initAuto() {
-      gearTalon.setPosition(0);
-       // gearTalon.changeControlMode(TalonControlMode.MotionMagic);
+    if (Inputs.rollerInButton.isHeld()) {
+      rollerTalon.set(1);
+    } else if (Inputs.rollerOutButton.isHeld()) {
+      rollerTalon.set(-1);
     }
 
-    @Override public void sendToSmartDash() {
+
+  }
+
+  @Override
+  public void updateAuto() {
+
+  }
+
+  @Override
+  public void initTeleop() {
+    gearTalon.setPosition(0);
+    gearTalon.changeControlMode(TalonControlMode.MotionMagic);
+  }
+
+  @Override
+  public void initAuto() {
+    gearTalon.setPosition(0);
+    gearTalon.changeControlMode(TalonControlMode.MotionMagic);
+  }
+
+  @Override
+  public void sendToSmartDash() {
     SmartDashboard.putNumber("Arm Encoder Position", gearTalon.getPosition());
+  }
+
+  public void set(GearMechanismState state) {
+    gearMechState = state;
+    gearTalon.set(state.state);
+  }
+
+  public enum GearMechanismState {
+    PICKUP(Constants.GearMech.GEAR_PICKUP), STOW(Constants.GearMech.GEAR_STOW), PLACE(
+        Constants.GearMech.GEAR_PLACE);
+    public final double state;
+
+    GearMechanismState(final double state) {
+      this.state = state;
     }
-
-     public void set(GearMechanismState state) {
-        gearMechState = state;
-        gearTalon.set(state.state);
-    }
-
-   public enum GearMechanismState {
-        PICKUP(Constants.GearMech.GEAR_PICKUP), STOW(Constants.GearMech.GEAR_STOW), PLACE(
-            Constants.GearMech.GEAR_PLACE);
-        public final double state;
-
-        GearMechanismState(final double state) {
-            this.state = state;
-        }
-    } 
+  }
 
 }

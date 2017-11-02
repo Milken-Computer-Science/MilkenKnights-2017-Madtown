@@ -71,17 +71,17 @@ public final class Constants {
     public static class GearMech {
         //Degrees - Zeroed on Stow
         public static final double GEAR_PICKUP = 120;
-        public static final double GEAR_PLACE = 10;
+        public static final double GEAR_PLACE = 60;
         public static final double GEAR_STOW = 0;
 
         public static final double MAX_VEL = 720; //Deg Per sec
-        public static final double GEAR_A = 0.75 * 4400;
-        public static final double GEAR_V = 0.75 * 4400;
+        public static final double GEAR_A = 0.75 * MAX_VEL;
+        public static final double GEAR_V = 0.75 * MAX_VEL;
         public static final int GEAR_I_ZONE = 0;
-        public static final double GEAR_P = ((0.1 * 1023) / 8000) * 16;
+        public static final double GEAR_P = 0;
         public static final double GEAR_I = 0;
         public static final double GEAR_D = 0;
-        public static final double GEAR_F = (1.0 * 1023) / (4400 / 60 / 10 * 4096);
+        public static final double GEAR_F = (1.0 * 1023) / (MAX_VEL / 10 * 4096);
        
     }
 
