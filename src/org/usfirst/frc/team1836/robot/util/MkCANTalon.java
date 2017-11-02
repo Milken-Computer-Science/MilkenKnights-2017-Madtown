@@ -5,7 +5,7 @@ import org.usfirst.frc.team1836.robot.Constants;
 
 public class MkCANTalon extends CANTalon {
 
-    private final double wheelDiameter;
+  private final double wheelDiameter;
   private final int codesPerRev = Constants.DRIVE.CODES_PER_REV;
   private final boolean rotation;
   private boolean setPrint = true;
@@ -44,16 +44,18 @@ public class MkCANTalon extends CANTalon {
 
   @Override
   public void set(double val) {
-    if (getControlMode().equals(TalonControlMode.Speed)) {
-      super.set(userToNative(val) / 100);
-    } else if (getControlMode().equals(TalonControlMode.MotionMagic)) {
-      System.out.println(userToNative(val));
-      super.set(userToNative(val));
-    } else {
-      super.set(val);
-    }
+    super.set(modeValue(val));
     if (setPrint)
-      System.out.println("Mode: " + getControlMode().toString() + " Value: " + val);
+      System.out.println("Mode: " + getControlMode().toString() + " Value: " + modeValue(val));
+  }
+
+  public double modeValue(double val) {
+    if (getControlMode().equals(TalonControlMode.Speed)) {
+      return userToNative(val) / 100;
+    } else if (getControlMode().equals(TalonControlMode.MotionMagic)) {
+      return userToNative(val);
+    }
+    return val;
   }
 
   private int userToNative(double val) {

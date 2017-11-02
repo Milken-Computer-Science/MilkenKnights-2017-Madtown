@@ -13,15 +13,14 @@ import org.usfirst.frc.team1836.robot.util.Subsystem;
 
 public class GearMech extends Subsystem {
   private static GearMech gearMech;
-  private CANTalon gearTalon;
+  private MkCANTalon gearTalon;
   private MkCANTalon rollerTalon;
-  @SuppressWarnings("unused")
   private GearMechanismState gearMechState;
 
 
   public GearMech() {
     super("GEARMECH");
-    gearTalon = new CANTalon(Constants.Hardware.GEAR_PICKUP_TALON_ID);
+    gearTalon = new MkCANTalon(Constants.Hardware.GEAR_PICKUP_TALON_ID, true);
     gearTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
     gearTalon.reverseSensor(Constants.Hardware.GEAR_ARM_TALON_SENSOR_REVERSE);
     gearTalon.reverseOutput(Constants.Hardware.GEAR_ARM_TALON_REVERSE);
@@ -35,10 +34,10 @@ public class GearMech extends Subsystem {
     gearTalon.setIZone(Constants.GearMech.GEAR_I_ZONE);
     gearTalon.setMotionMagicCruiseVelocity(Constants.GearMech.GEAR_V);
     gearTalon.setMotionMagicAcceleration(Constants.GearMech.GEAR_A);
+    gearTalon.setPrint(true);
     gearMechState = GearMechanismState.STOW;
 
     rollerTalon = new MkCANTalon(Constants.Hardware.ROLLER_TALON_ID, false);
-    rollerTalon.reverseOutput(Constants.Hardware.ROLLER_TALON_REVERSE);
     rollerTalon.setPrint(false);
   }
 
@@ -59,14 +58,27 @@ public class GearMech extends Subsystem {
     if (Inputs.gearPickupButton.isHeld()) {
       gearTalon.changeControlMode(TalonControlMode.MotionMagic);
       gearTalon.set(Inputs.operatorJoystick.getRawAxis(1) * 10);
-      System.out.println(gearTalon.getClosedLoopError() + "Error");
-      System.out.println(gearTalon.getOutputVoltage() / gearTalon.getBusVoltage() + " Voltage");
+      System.out.println("Voltage: " + gearTalon.getOutputVoltage() / gearTalon.getBusVoltage()
+          + " Error: " + gearTalon.getClosedLoopError() + " Position: " + gearTalon.getPosition()
+          + " Raw Position " + gearTalon.getEncPosition());
+    } 
+    else if (Inputs.gearPlaceButton.isHeld()) {
+      gearTalon.changeControlMode(TalonControlMode.PercentVbus);
+      gearTalon.set(Inputs.operatorJoystick.getRawAxis(1));
+      System.out.println("Voltage: " + gearTalon.getOutputVoltage() / gearTalon.getBusVoltage()
+          + " Error: " + gearTalon.getClosedLoopError() + " Position: " + gearTalon.getPosition()
+          + " Raw Position " + gearTalon.getEncPosition());
+    } 
+    else{
+      gearTalon.set(0);
     }
 
     if (Inputs.rollerInButton.isHeld()) {
-      rollerTalon.set(1);
+      rollerTalon.set(Constants.GearMech.ROLLER_SPEED);
     } else if (Inputs.rollerOutButton.isHeld()) {
-      rollerTalon.set(-1);
+      rollerTalon.set(-Constants.GearMech.ROLLER_SPEED);
+    } else {
+      rollerTalon.set(0);
     }
 
 
@@ -79,13 +91,13 @@ public class GearMech extends Subsystem {
 
   @Override
   public void initTeleop() {
-    gearTalon.setPosition(0);
+    gearTalon.setEncPosition(0);
     gearTalon.changeControlMode(TalonControlMode.MotionMagic);
   }
 
   @Override
   public void initAuto() {
-    gearTalon.setPosition(0);
+    gearTalon.setEncPosition(0);
     gearTalon.changeControlMode(TalonControlMode.MotionMagic);
   }
 
@@ -97,6 +109,10 @@ public class GearMech extends Subsystem {
   public void set(GearMechanismState state) {
     gearMechState = state;
     gearTalon.set(state.state);
+  }
+
+  public GearMechanismState getState() {
+    return gearMechState;
   }
 
   public enum GearMechanismState {

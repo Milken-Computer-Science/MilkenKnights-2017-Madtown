@@ -12,8 +12,6 @@ public final class Constants {
         public static final int RIGHT_BACK_TALON_ID = 7;
         public static final int GEAR_PICKUP_TALON_ID = 5;
         public static final int ROLLER_TALON_ID = 3;
-        
-        public static final boolean ROLLER_TALON_REVERSE = false;
 
         public static final boolean GEAR_ARM_TALON_SENSOR_REVERSE = false;
         public static final boolean GEAR_ARM_TALON_REVERSE = false;
@@ -82,6 +80,8 @@ public final class Constants {
         public static final double GEAR_I = 0;
         public static final double GEAR_D = 0;
         public static final double GEAR_F = (1.0 * 1023) / (MAX_VEL / 10 * 4096);
+        
+        public static final double ROLLER_SPEED = -0.75;
        
     }
 
