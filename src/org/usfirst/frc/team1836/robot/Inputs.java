@@ -10,9 +10,13 @@ public class Inputs {
     public static final MkButton reverseButton =
         driverJoystick.getButton(Constants.Input.REVERSE_BUTTON);
     public static final MkButton gearPickupButton =
-        driverJoystick.getButton(Constants.Input.GEAR_PICKUP_BUTTON);
+        operatorJoystick.getButton(Constants.Input.GEAR_PICKUP_BUTTON);
     public static final MkButton gearStowButton =
-        driverJoystick.getButton(Constants.Input.GEAR_STOW_BUTTON);
+        operatorJoystick.getButton(Constants.Input.GEAR_STOW_BUTTON);
     public static final MkButton gearPlaceButton =
-        driverJoystick.getButton(Constants.Input.GEAR_PLACE_BUTTON);
+        operatorJoystick.getButton(Constants.Input.GEAR_PLACE_BUTTON);
+    public static final MkButton rollerInButton =
+        operatorJoystick.getButton(Constants.Input.ROLLER_IN_BUTTON);
+    public static final MkButton rollerOutButton =
+        operatorJoystick.getButton(Constants.Input.ROLLER_OUT_BUTTON);
 }

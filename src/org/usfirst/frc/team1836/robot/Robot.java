@@ -8,22 +8,22 @@ import org.usfirst.frc.team1836.robot.auto.commandgroups.MagicCenterAuto;
 import org.usfirst.frc.team1836.robot.auto.commandgroups.NoAuto;
 import org.usfirst.frc.team1836.robot.auto.commands.CenterPathFollower;
 import org.usfirst.frc.team1836.robot.subsystems.Drive;
+import org.usfirst.frc.team1836.robot.subsystems.GearMech;
 
 public class Robot extends IterativeRobot {
     private static SendableChooser<Command> mainAutoChooser = new SendableChooser<>();
-    private Systems system;
     private Command autonomousCommand;
 
     @Override public void robotInit() {
         Drive.getInstance();
+        GearMech.getInstance();
         mainAutoChooser.addObject("No Auto", new NoAuto());
         mainAutoChooser.addObject("Center Auto - Trajectory", new CenterPathFollower());
         mainAutoChooser.addObject("Center Auto - Magic Motion", new MagicCenterAuto());
-        system = new Systems();
     }
 
     @Override public void autonomousInit() {
-        system.initAuto();
+        Systems.initAuto();
         autonomousCommand = mainAutoChooser.getSelected();
         if (autonomousCommand != null) {
             autonomousCommand.start();
@@ -32,8 +32,8 @@ public class Robot extends IterativeRobot {
 
     @Override public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        system.updateAuto();
-        system.smartDashboard();
+       Systems.updateAuto();
+        Systems.smartDashboard();
     }
 
     @Override public void disabledInit() {
@@ -41,12 +41,15 @@ public class Robot extends IterativeRobot {
     }
 
     @Override public void teleopInit() {
-        system.initTeleop();
+        Systems.initTeleop();
     }
 
     @Override public void teleopPeriodic() {
-        system.updateTeleop();
-        system.smartDashboard();
+        Systems.updateTeleop();
+        Systems.smartDashboard();
+    }
+    public void disabledPeriodic(){
+      Systems.smartDashboard();
     }
 
 }

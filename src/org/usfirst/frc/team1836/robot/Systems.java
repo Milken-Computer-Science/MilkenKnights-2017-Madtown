@@ -12,31 +12,31 @@ public class Systems {
         systems.add(e);
     }
 
-    public void updateAuto() {
+    public static void updateAuto() {
         for (Subsystem e : systems) {
             e.updateAuto();
         }
     }
 
-    public void updateTeleop() {
+    public static void updateTeleop() {
         for (Subsystem e : systems) {
             e.updateTeleop();
         }
     }
 
-    public void smartDashboard() {
+    public static void smartDashboard() {
         for (Subsystem e : systems) {
             e.sendToSmartDash();
         }
     }
 
-    public void initAuto() {
+    public static void initAuto() {
         for (Subsystem e : systems) {
             e.initAuto();
         }
     }
 
-    public void initTeleop() {
+    public static void initTeleop() {
         for (Subsystem e : systems) {
             e.initTeleop();
         }

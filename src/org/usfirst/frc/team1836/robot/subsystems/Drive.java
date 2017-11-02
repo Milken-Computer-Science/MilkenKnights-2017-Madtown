@@ -86,7 +86,6 @@ public class Drive extends Subsystem {
   @Override
   public void updateTeleop() {
     robotDr.arcadeDrive(Inputs.driverJoystick.getRawAxis(1), Inputs.driverJoystick.getRawAxis(2));
-    System.out.println("Arcade Drive");
   }
 
   @Override

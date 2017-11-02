@@ -10,7 +10,10 @@ public final class Constants {
         public static final int LEFT_BACK_TALON_ID = 2;
         public static final int RIGHT_FWD_TALON_ID = 8;
         public static final int RIGHT_BACK_TALON_ID = 7;
-        public static final int GEAR_PICKUP_TALON_ID = 4;
+        public static final int GEAR_PICKUP_TALON_ID = 5;
+        public static final int ROLLER_TALON_ID = 3;
+        
+        public static final boolean ROLLER_TALON_REVERSE = false;
 
         public static final boolean GEAR_ARM_TALON_SENSOR_REVERSE = false;
         public static final boolean GEAR_ARM_TALON_REVERSE = false;
@@ -32,6 +35,8 @@ public final class Constants {
         public static final int GEAR_PICKUP_BUTTON = 2;
         public static final int GEAR_STOW_BUTTON = 3;
         public static final int GEAR_PLACE_BUTTON = 4;
+        public static final int ROLLER_IN_BUTTON = 5;
+        public static final int ROLLER_OUT_BUTTON = 6;
     }
 
 
@@ -66,17 +71,18 @@ public final class Constants {
     public static class GearMech {
         //Degrees - Zeroed on Stow
         public static final double GEAR_PICKUP = 120;
-        public static final double GEAR_PLACE = 60;
+        public static final double GEAR_PLACE = 10;
         public static final double GEAR_STOW = 0;
 
-        public static final double MAX_ROTATIONS = 1.5; //Per sec
-        public static final double GEAR_A = 0.75 * MAX_ROTATIONS;
-        public static final double GEAR_V = 0.75 * MAX_ROTATIONS;
-        public static final int GEAR_I_ZONE = 400;
-        public static final double GEAR_P = (((0.1 * 1023) / 8000) * 16);
-        public static final double GEAR_I = 0.001;
-        public static final double GEAR_D = ((0.1 * 1023) / 8000) * 160;
-        public static final double GEAR_F = 1.2487792969;
+        public static final double MAX_VEL = 720; //Deg Per sec
+        public static final double GEAR_A = 0.75 * 4400;
+        public static final double GEAR_V = 0.75 * 4400;
+        public static final int GEAR_I_ZONE = 0;
+        public static final double GEAR_P = ((0.1 * 1023) / 8000) * 16;
+        public static final double GEAR_I = 0;
+        public static final double GEAR_D = 0;
+        public static final double GEAR_F = (1.0 * 1023) / (4400 / 60 / 10 * 4096);
+       
     }
 
 
