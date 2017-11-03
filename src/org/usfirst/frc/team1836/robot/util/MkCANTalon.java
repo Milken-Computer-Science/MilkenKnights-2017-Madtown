@@ -26,9 +26,13 @@ public class MkCANTalon extends CANTalon {
     this.wheelDiameter = 0;
   }
 
-  @Override
-  public double getPosition() {
-    return nativeToUser(getEncPosition());
+ 
+  public double getMkPosition() {
+    return getPosition() * 4096;
+  }
+
+  public double getMkSetpoint() {
+    return getSetpoint();
   }
 
   /*
@@ -39,7 +43,7 @@ public class MkCANTalon extends CANTalon {
   }
 
   public void setEncoderPosition(double pos) {
-    setEncPosition(userToNative(pos));
+    setEncPosition((int) userToNative(pos));
   }
 
   @Override
@@ -53,20 +57,20 @@ public class MkCANTalon extends CANTalon {
     if (getControlMode().equals(TalonControlMode.Speed)) {
       return userToNative(val) / 100;
     } else if (getControlMode().equals(TalonControlMode.MotionMagic)) {
-      return userToNative(val);
+      return val;
     }
     return val;
   }
 
-  private int userToNative(double val) {
+  private double userToNative(double val) {
     if (rotation) {
-      return (int) Math.round((val / 360) * ((double) codesPerRev));
+      return Math.round((val / 360) * ((double) codesPerRev));
     } else {
-      return (int) Math.round((val / (wheelDiameter * Math.PI)) * codesPerRev);
+      return Math.round((val / (wheelDiameter * Math.PI)) * codesPerRev);
     }
   }
 
-  private double nativeToUser(int val) {
+  private double nativeToUser(double val) {
     if (rotation) {
       return (val / ((double) codesPerRev)) * 360.0;
     } else {

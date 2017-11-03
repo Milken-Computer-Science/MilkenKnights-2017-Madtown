@@ -25,7 +25,7 @@ public class GearMech extends Subsystem {
     gearTalon.reverseSensor(Constants.Hardware.GEAR_ARM_TALON_SENSOR_REVERSE);
     gearTalon.reverseOutput(Constants.Hardware.GEAR_ARM_TALON_REVERSE);
     gearTalon.configNominalOutputVoltage(+0.0f, 0.0f);
-    gearTalon.configPeakOutputVoltage(12.0f, -12.0f);
+    gearTalon.configPeakOutputVoltage(1.0f, -1.0f);
     gearTalon.setProfile(0);
     gearTalon.setF(Constants.GearMech.GEAR_F);
     gearTalon.setP(Constants.GearMech.GEAR_P);
@@ -50,28 +50,19 @@ public class GearMech extends Subsystem {
 
   @Override
   public void updateTeleop() {
+
     /*
      * if (Inputs.gearPickupButton.isPressed()) { set(GearMechanismState.PICKUP); } else if
      * (Inputs.gearStowButton.isPressed()) { set(GearMechanismState.STOW); } else if
      * (Inputs.gearPlaceButton.isPressed()) { set(GearMechanismState.PLACE); }
      */
-    if (Inputs.gearPickupButton.isHeld()) {
-      gearTalon.changeControlMode(TalonControlMode.MotionMagic);
-      gearTalon.set(Inputs.operatorJoystick.getRawAxis(1) * 10);
-      System.out.println("Voltage: " + gearTalon.getOutputVoltage() / gearTalon.getBusVoltage()
-          + " Error: " + gearTalon.getClosedLoopError() + " Position: " + gearTalon.getPosition()
-          + " Raw Position " + gearTalon.getEncPosition());
-    } 
-    else if (Inputs.gearPlaceButton.isHeld()) {
+    if (Inputs.gearPickupButton.isPressed()) {
       gearTalon.changeControlMode(TalonControlMode.PercentVbus);
       gearTalon.set(Inputs.operatorJoystick.getRawAxis(1));
-      System.out.println("Voltage: " + gearTalon.getOutputVoltage() / gearTalon.getBusVoltage()
-          + " Error: " + gearTalon.getClosedLoopError() + " Position: " + gearTalon.getPosition()
-          + " Raw Position " + gearTalon.getEncPosition());
-    } 
-    else{
-      gearTalon.set(0);
     }
+    else  {
+    gearTalon.set(0);
+    } 
 
     if (Inputs.rollerInButton.isHeld()) {
       rollerTalon.set(Constants.GearMech.ROLLER_SPEED);
@@ -81,7 +72,7 @@ public class GearMech extends Subsystem {
       rollerTalon.set(0);
     }
 
-
+    System.out.println("Voltage: " + gearTalon.getOutputVoltage() / gearTalon.getBusVoltage() + " Position: " + gearTalon.getMkPosition() + " Setpoint: " + gearTalon.getMkSetpoint() + " Error: " + gearTalon.getError() + " MyError: " + (gearTalon.getSetpoint() - gearTalon.getPosition()));
   }
 
   @Override
@@ -93,17 +84,20 @@ public class GearMech extends Subsystem {
   public void initTeleop() {
     gearTalon.setEncPosition(0);
     gearTalon.changeControlMode(TalonControlMode.MotionMagic);
+    gearTalon.set(0);
   }
 
   @Override
   public void initAuto() {
     gearTalon.setEncPosition(0);
     gearTalon.changeControlMode(TalonControlMode.MotionMagic);
+    gearTalon.set(0);
   }
 
   @Override
   public void sendToSmartDash() {
-    SmartDashboard.putNumber("Arm Encoder Position", gearTalon.getPosition());
+    SmartDashboard.putNumber("Arm Encoder Position", gearTalon.getMkPosition());
+    SmartDashboard.putNumber("Setpoint Encoder Position", gearTalon.getMkSetpoint());
   }
 
   public void set(GearMechanismState state) {

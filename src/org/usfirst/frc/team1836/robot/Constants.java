@@ -13,7 +13,7 @@ public final class Constants {
         public static final int GEAR_PICKUP_TALON_ID = 5;
         public static final int ROLLER_TALON_ID = 3;
 
-        public static final boolean GEAR_ARM_TALON_SENSOR_REVERSE = false;
+        public static final boolean GEAR_ARM_TALON_SENSOR_REVERSE = true;
         public static final boolean GEAR_ARM_TALON_REVERSE = false;
 
         public static final boolean LEFT_FWD_TALON_SENSOR_REVERSE = true;
@@ -72,15 +72,14 @@ public final class Constants {
         public static final double GEAR_PLACE = 60;
         public static final double GEAR_STOW = 0;
 
-        public static final double MAX_VEL = 720; //Deg Per sec
+        public static final double MAX_VEL = 120; //RPM
         public static final double GEAR_A = 0.75 * MAX_VEL;
         public static final double GEAR_V = 0.75 * MAX_VEL;
         public static final int GEAR_I_ZONE = 0;
-        public static final double GEAR_P = 0;
+        public static final double GEAR_P = 0.1;
         public static final double GEAR_I = 0;
-        public static final double GEAR_D = 0;
-        public static final double GEAR_F = (1.0 * 1023) / (MAX_VEL / 10 * 4096);
-        
+        public static final double GEAR_D = 0.01;
+        public static final double GEAR_F = (1023) / (0.2 * 4096);
         public static final double ROLLER_SPEED = -0.75;
        
     }
