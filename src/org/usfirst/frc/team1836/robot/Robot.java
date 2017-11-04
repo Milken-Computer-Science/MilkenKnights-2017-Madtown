@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
 
     @Override public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-       Systems.updateAuto();
+        Systems.updateAuto();
         Systems.smartDashboard();
     }
 
@@ -48,8 +48,9 @@ public class Robot extends IterativeRobot {
         Systems.updateTeleop();
         Systems.smartDashboard();
     }
-    public void disabledPeriodic(){
-      Systems.smartDashboard();
+
+    public void disabledPeriodic() {
+        Systems.smartDashboard();
     }
 
 }

@@ -34,7 +34,7 @@ public class CheesyDriveHelper {
     private double mNegInertiaAccumlator = 0.0;
 
     public DriveSignal cheesyDrive(double throttle, double wheel, boolean isQuickTurn,
-            boolean isHighGear) {
+        boolean isHighGear) {
 
         wheel = handleDeadband(wheel, kWheelDeadband);
         throttle = handleDeadband(throttle, kThrottleDeadband);
@@ -100,8 +100,9 @@ public class CheesyDriveHelper {
         if (isQuickTurn) {
             if (Math.abs(linearPower) < kQuickStopDeadband) {
                 double alpha = kQuickStopWeight;
-                mQuickStopAccumlator = (1 - alpha) * mQuickStopAccumlator
-                        + alpha * Util.limit(wheel, 1.0) * kQuickStopScalar;
+                mQuickStopAccumlator =
+                    (1 - alpha) * mQuickStopAccumlator + alpha * Util.limit(wheel, 1.0)
+                        * kQuickStopScalar;
             }
             overPower = 1.0;
             angularPower = wheel;
