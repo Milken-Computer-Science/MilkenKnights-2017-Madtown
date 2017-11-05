@@ -28,22 +28,40 @@ public class MkCANTalon extends CANTalon {
 
 
     public double getMkPosition() {
-        return getPosition() * 4096;
+        if (rotation) {
+            return getEncPosition() * 360;
+        } else {
+            return getEncPosition() * Math.PI * wheelDiameter;
+        }
     }
 
     public double getMkSetpoint() {
-        return getSetpoint();
+        if (rotation) {
+            return getEncPosition() * 360;
+        } else {
+            return getEncPosition() * Math.PI * wheelDiameter;
+        }
     }
 
     /*
-     * @return User Unit Velocity In Seconds
+     * @return  Degrees Per Second or Inches Per Second
      */
-    public double getVelocity() {
-        return nativeToUser(getEncVelocity()) * 10;
+    public double getMkVelocity() {
+        if (rotation) {
+            return (getEncVelocity() / 60) * 360;
+            //RPM * 1 min / 60 sec * 360 deg / 1 rotation
+        } else {
+            return (getEncVelocity() * (Math.PI * wheelDiameter) / 60);
+            //RPM * (PI * wheelDiameter) * 1 min / 60 seconds
+        }
     }
 
-    public void setEncoderPosition(double pos) {
-        setEncPosition((int) userToNative(pos));
+    public void setEncPosition(double pos) {
+        if (rotation) {
+            super.set(pos / 360);
+        } else {
+            super.set(pos / (Math.PI * wheelDiameter));
+        }
     }
 
     @Override public void set(double val) {
@@ -55,26 +73,19 @@ public class MkCANTalon extends CANTalon {
 
     public double modeValue(double val) {
         if (getControlMode().equals(TalonControlMode.Speed)) {
-            return userToNative(val) / 100;
+            if (rotation) {
+                return (val / 360) * 60;
+            } else {
+                return (val / (Math.PI * wheelDiameter)) * 60;
+            }
         } else if (getControlMode().equals(TalonControlMode.MotionMagic)) {
+            if (rotation) {
+                return val / 360;
+            } else {
+                return (val / (Math.PI * wheelDiameter));
+            }
+        } else {
             return val;
-        }
-        return val;
-    }
-
-    private double userToNative(double val) {
-        if (rotation) {
-            return Math.round((val / 360) * ((double) codesPerRev));
-        } else {
-            return Math.round((val / (wheelDiameter * Math.PI)) * codesPerRev);
-        }
-    }
-
-    private double nativeToUser(double val) {
-        if (rotation) {
-            return (val / ((double) codesPerRev)) * 360.0;
-        } else {
-            return (val / codesPerRev) * (wheelDiameter * Math.PI);
         }
     }
 
