@@ -30,10 +30,10 @@ public final class Constants {
         public static final int DRIVE_STICK = 0;
         public static final int OPERATOR_STICK = 1;
         public static final int REVERSE_BUTTON = 1;
-        public static final int GEAR_PICKUP_BUTTON = 2;
+        public static final int GEAR_PICKUP_BUTTON = 1;
         public static final int GEAR_STOW_BUTTON = 3;
         public static final int GEAR_PLACE_BUTTON = 4;
-        public static final int ROLLER_IN_BUTTON = 5;
+        public static final int ROLLER_IN_BUTTON = 7;
         public static final int ROLLER_OUT_BUTTON = 6;
     }
 
