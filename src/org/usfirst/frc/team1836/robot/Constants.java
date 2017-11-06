@@ -80,7 +80,7 @@ public final class Constants {
         public static final double GEAR_I = 0;
         public static final double GEAR_D = 0.01;
         public static final double GEAR_F = (1023) / (0.2 * 4096);
-        public static final double ROLLER_SPEED = -0.75;
+        public static final double ROLLER_SPEED = -0.375;
 
     }
 

@@ -47,11 +47,6 @@ public class GearMech extends Subsystem {
 
     @Override public void updateTeleop() {
 
-    /*
-     * if (Inputs.gearPickupButton.isPressed()) { set(GearMechanismState.PICKUP); } else if
-     * (Inputs.gearStowButton.isPressed()) { set(GearMechanismState.STOW); } else if
-     * (Inputs.gearPlaceButton.isPressed()) { set(GearMechanismState.PLACE); }
-     */
         if (Inputs.gearPickupButton.isPressed()) {
             gearTalon.changeControlMode(TalonControlMode.PercentVbus);
             gearTalon.set(Inputs.operatorJoystick.getRawAxis(1));
@@ -70,8 +65,7 @@ public class GearMech extends Subsystem {
         System.out.println(
             "Voltage: " + gearTalon.getOutputVoltage() / gearTalon.getBusVoltage() + " Position: "
                 + gearTalon.getMkPosition() + " Setpoint: " + gearTalon.getMkSetpoint() + " Error: "
-                + gearTalon.getError() + " MyError: " + (gearTalon.getSetpoint() - gearTalon
-                .getPosition()));
+                + gearTalon.getMkError());
     }
 
     @Override public void updateAuto() {
