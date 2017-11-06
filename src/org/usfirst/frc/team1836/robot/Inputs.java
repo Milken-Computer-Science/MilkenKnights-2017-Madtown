@@ -19,4 +19,8 @@ public class Inputs {
         operatorJoystick.getButton(Constants.Input.ROLLER_IN_BUTTON);
     public static final MkButton rollerOutButton =
         operatorJoystick.getButton(Constants.Input.ROLLER_OUT_BUTTON);
+    public static final MkButton climberButton =
+        operatorJoystick.getButton(Constants.Input.CLIMBER_BUTTON);
+    public static final MkButton climberReverseButton =
+        operatorJoystick.getButton(Constants.Input.CLIMBER_REVERSE_BUTTON);
 }

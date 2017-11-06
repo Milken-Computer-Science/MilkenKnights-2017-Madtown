@@ -12,6 +12,7 @@ public final class Constants {
         public static final int RIGHT_BACK_TALON_ID = 7;
         public static final int GEAR_PICKUP_TALON_ID = 5;
         public static final int ROLLER_TALON_ID = 3;
+        public static final int CLIMBER_TALON_ID = 6;
 
         public static final boolean GEAR_ARM_TALON_SENSOR_REVERSE = true;
         public static final boolean GEAR_ARM_TALON_REVERSE = false;
@@ -30,11 +31,13 @@ public final class Constants {
         public static final int DRIVE_STICK = 0;
         public static final int OPERATOR_STICK = 1;
         public static final int REVERSE_BUTTON = 1;
-        public static final int GEAR_PICKUP_BUTTON = 1;
-        public static final int GEAR_STOW_BUTTON = 3;
-        public static final int GEAR_PLACE_BUTTON = 4;
+        public static final int GEAR_PICKUP_BUTTON = 5;
+        public static final int GEAR_STOW_BUTTON = 4;
+        public static final int GEAR_PLACE_BUTTON = 3;
         public static final int ROLLER_IN_BUTTON = 7;
         public static final int ROLLER_OUT_BUTTON = 6;
+        public static final int CLIMBER_BUTTON = 8;
+        public static final int CLIMBER_REVERSE_BUTTON = 9;
     }
 
 
@@ -68,19 +71,20 @@ public final class Constants {
 
     public static class GearMech {
         //Degrees - Zeroed on Stow
-        public static final double GEAR_PICKUP = 120;
-        public static final double GEAR_PLACE = 60;
+        public static final double GEAR_PICKUP = -180;
+        public static final double GEAR_PLACE = -110;
         public static final double GEAR_STOW = 0;
 
         public static final double MAX_VEL = 120; //RPM
-        public static final double GEAR_A = 0.75 * MAX_VEL;
-        public static final double GEAR_V = 0.75 * MAX_VEL;
-        public static final int GEAR_I_ZONE = 0;
-        public static final double GEAR_P = 0.1;
-        public static final double GEAR_I = 0;
-        public static final double GEAR_D = 0.01;
+        public static final double GEAR_A = 0.9 * MAX_VEL;
+        public static final double GEAR_V = 0.9 * MAX_VEL;
+        public static final int GEAR_I_ZONE = 50;
+        public static final double GEAR_P = 0.06709 * 80;
+        public static final double GEAR_I = 0.004;
+        public static final double GEAR_D = 0.06709 * 80 * 70;
         public static final double GEAR_F = (1023) / (0.2 * 4096);
         public static final double ROLLER_SPEED = -0.375;
+        public static final double ROLLER_DEFAULT_SPEED = -0.375 / 10;
 
     }
 

@@ -29,9 +29,9 @@ public class MkCANTalon extends CANTalon {
 
     public double getMkPosition() {
         if (rotation) {
-            return getEncPosition() * 360;
+            return getPosition() * 360;
         } else {
-            return getEncPosition() * Math.PI * wheelDiameter;
+            return getPosition() * Math.PI * wheelDiameter;
         }
     }
 
@@ -45,7 +45,7 @@ public class MkCANTalon extends CANTalon {
 
     public double getMkError() {
         if (rotation) {
-            return (getError() / codesPerRev) * 360;
+            return getMkSetpoint() - getMkPosition();
         } else {
             return (getError() / codesPerRev) * Math.PI * wheelDiameter;
         }
@@ -56,7 +56,7 @@ public class MkCANTalon extends CANTalon {
      */
     public double getMkVelocity() {
         if (rotation) {
-            return (getEncVelocity() / 60) * 360;
+            return getEncVelocity();
             //RPM * 1 min / 60 sec * 360 deg / 1 rotation
         } else {
             return ((getEncVelocity() * (Math.PI * wheelDiameter)) / 60);

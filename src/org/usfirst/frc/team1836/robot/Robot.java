@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.usfirst.frc.team1836.robot.auto.commandgroups.MagicCenterAuto;
 import org.usfirst.frc.team1836.robot.auto.commandgroups.NoAuto;
 import org.usfirst.frc.team1836.robot.auto.commands.CenterPathFollower;
+import org.usfirst.frc.team1836.robot.subsystems.Climber;
 import org.usfirst.frc.team1836.robot.subsystems.Drive;
 import org.usfirst.frc.team1836.robot.subsystems.GearMech;
 
@@ -17,6 +18,7 @@ public class Robot extends IterativeRobot {
     @Override public void robotInit() {
         Drive.getInstance();
         GearMech.getInstance();
+        Climber.getInstance();
         mainAutoChooser.addObject("No Auto", new NoAuto());
         mainAutoChooser.addObject("Center Auto - Trajectory", new CenterPathFollower());
         mainAutoChooser.addObject("Center Auto - Magic Motion", new MagicCenterAuto());
