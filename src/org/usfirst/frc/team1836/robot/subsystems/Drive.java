@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1836.robot.Inputs;
+import org.usfirst.frc.team1836.robot.util.CheesyDriveHelper;
 import org.usfirst.frc.team1836.robot.util.MkCANTalon;
 import org.usfirst.frc.team1836.robot.util.MkGyro;
 import org.usfirst.frc.team1836.robot.util.Subsystem;
@@ -27,6 +28,7 @@ public class Drive extends Subsystem {
     private MkGyro navX;
     private TrajectoryFollower trajFollower;
     private double trajectoryDist;
+    private CheesyDriveHelper mCheesyDriveHelper = new CheesyDriveHelper();
 
     private Drive() {
         super("DRIVE");
@@ -84,8 +86,12 @@ public class Drive extends Subsystem {
     }
 
     @Override public void updateTeleop() {
-        robotDr
-            .arcadeDrive(Inputs.driverJoystick.getRawAxis(1), Inputs.driverJoystick.getRawAxis(2));
+        leftfwdtalon.set(mCheesyDriveHelper
+            .cheesyDrive(Inputs.driverJoystick.getRawAxis(1), Inputs.driverJoystick.getRawAxis(2),
+                false, false).getLeft());
+        rightfwdtalon.set(mCheesyDriveHelper
+            .cheesyDrive(Inputs.driverJoystick.getRawAxis(1), Inputs.driverJoystick.getRawAxis(2),
+                false, false).getRight());
     }
 
     @Override public void updateAuto() {
@@ -94,9 +100,8 @@ public class Drive extends Subsystem {
 
     @Override public void initTeleop() {
         leftfwdtalon.changeControlMode(TalonControlMode.PercentVbus);
-        leftbacktalon.changeControlMode(TalonControlMode.PercentVbus);
         rightfwdtalon.changeControlMode(TalonControlMode.PercentVbus);
-        rightbacktalon.changeControlMode(TalonControlMode.PercentVbus);
+        setFollowerMode();
         leftfwdtalon.setEncPosition(0);
         rightfwdtalon.setEncPosition(0);
     }

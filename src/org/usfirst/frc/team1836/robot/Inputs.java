@@ -23,4 +23,6 @@ public class Inputs {
         operatorJoystick.getButton(Constants.Input.CLIMBER_BUTTON);
     public static final MkButton climberReverseButton =
         operatorJoystick.getButton(Constants.Input.CLIMBER_REVERSE_BUTTON);
+    public static final MkButton gearManualButton =
+        operatorJoystick.getButton(Constants.Input.GEAR_MANUAL_BUTTON);
 }
