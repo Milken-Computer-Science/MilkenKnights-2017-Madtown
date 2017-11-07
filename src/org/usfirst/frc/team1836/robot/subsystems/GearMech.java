@@ -109,6 +109,10 @@ public class GearMech extends Subsystem {
         gearTalon.set(state.state);
     }
 
+    public void setRollers(double val){
+        rollerTalon.set(-val);
+    }
+
     public GearMechanismState getState() {
         return gearMechState;
     }

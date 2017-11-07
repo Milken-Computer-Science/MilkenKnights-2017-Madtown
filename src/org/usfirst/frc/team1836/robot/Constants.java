@@ -38,8 +38,8 @@ public final class Constants {
         public static final int ROLLER_OUT_BUTTON = 6;
         public static final int CLIMBER_FWD_BUTTON = 8;
         public static final int CLIMBER_BACK_BUTTON = 9;
-        public static final int GEAR_MANUAL_BUTTON = 9;
-        public static final int GEAR_RESET_BUTTON = 9;
+        public static final int GEAR_MANUAL_BUTTON = 10;
+        public static final int GEAR_RESET_BUTTON = 11;
     }
 
 
@@ -95,7 +95,11 @@ public final class Constants {
 
     public static class Auto {
         public static final double CENTER_AUTO_DISTANCE = 90;
+        public static final double CENTER_AUTO_SPEED = 0.75;
+        public static final double CENTER_AUTO_TIME = 5;
     }
+
+
     public static class Climb {
         public static final double CLIMBER_SPEED = 0.75;
     }

@@ -118,6 +118,17 @@ public class Drive extends Subsystem {
         SmartDashboard.putNumber("Right Encoder Velocity", rightfwdtalon.getEncVelocity());
     }
 
+    public void setControlMode(TalonControlMode mode) {
+        leftfwdtalon.changeControlMode(mode);
+        rightfwdtalon.changeControlMode(mode);
+        setFollowerMode();
+    }
+
+    public void setDrive(double val) {
+        leftfwdtalon.set(val);
+        rightfwdtalon.set(val);
+    }
+
     public void setMagicPosition(double pos) {
         setMagicMode();
         leftfwdtalon.setEncPosition(0);
