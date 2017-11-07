@@ -36,9 +36,10 @@ public final class Constants {
         public static final int GEAR_PLACE_BUTTON = 3;
         public static final int ROLLER_IN_BUTTON = 7;
         public static final int ROLLER_OUT_BUTTON = 6;
-        public static final int CLIMBER_BUTTON = 8;
-        public static final int CLIMBER_REVERSE_BUTTON = 9;
+        public static final int CLIMBER_FWD_BUTTON = 8;
+        public static final int CLIMBER_BACK_BUTTON = 9;
         public static final int GEAR_MANUAL_BUTTON = 9;
+        public static final int GEAR_RESET_BUTTON = 9;
     }
 
 
@@ -87,12 +88,16 @@ public final class Constants {
         public static final double ROLLER_SPEED = -0.375;
         public static final double ROLLER_DEFAULT_SPEED = -0.375 / 10;
         public static final double STOW_CURRENT_LIMIT = 8.0;
-
+        public static final double RESET_CURRENT_LIMIT = 8.0;
+        public static final double RESET_BACK_POWER = -0.25;
     }
 
 
     public static class Auto {
         public static final double CENTER_AUTO_DISTANCE = 90;
+    }
+    public static class Climb {
+        public static final double CLIMBER_SPEED = 0.75;
     }
 
 }

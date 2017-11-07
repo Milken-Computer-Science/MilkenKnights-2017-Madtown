@@ -8,8 +8,6 @@ import org.usfirst.frc.team1836.robot.util.Subsystem;
 public class Climber extends Subsystem {
     private static Climber climber;
     private MkCANTalon climberTalon;
-    private int reverse = 1;
-
 
     public Climber() {
         super("CLIMBER");
@@ -25,12 +23,10 @@ public class Climber extends Subsystem {
     }
 
     @Override public void updateTeleop() {
-        if (Inputs.climberReverseButton.isPressed()) {
-            reverse = -reverse;
-            System.out.println("Reverse");
-        }
-        if (Inputs.climberButton.isHeld()) {
-            climberTalon.set(0.75 * reverse);
+        if (Inputs.climberFwdButton.isHeld()) {
+            climberTalon.set(Constants.Climb.CLIMBER_SPEED);
+        } else if (Inputs.climberBackButton.isHeld()) {
+            climberTalon.set(-Constants.Climb.CLIMBER_SPEED);
         } else {
             climberTalon.set(0);
         }

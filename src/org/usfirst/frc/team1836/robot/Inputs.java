@@ -19,10 +19,12 @@ public class Inputs {
         operatorJoystick.getButton(Constants.Input.ROLLER_IN_BUTTON);
     public static final MkButton rollerOutButton =
         operatorJoystick.getButton(Constants.Input.ROLLER_OUT_BUTTON);
-    public static final MkButton climberButton =
-        operatorJoystick.getButton(Constants.Input.CLIMBER_BUTTON);
-    public static final MkButton climberReverseButton =
-        operatorJoystick.getButton(Constants.Input.CLIMBER_REVERSE_BUTTON);
+    public static final MkButton climberFwdButton =
+        operatorJoystick.getButton(Constants.Input.CLIMBER_FWD_BUTTON);
+    public static final MkButton climberBackButton =
+        operatorJoystick.getButton(Constants.Input.CLIMBER_BACK_BUTTON);
     public static final MkButton gearManualButton =
         operatorJoystick.getButton(Constants.Input.GEAR_MANUAL_BUTTON);
+    public static final MkButton gearResetButton =
+        operatorJoystick.getButton(Constants.Input.GEAR_RESET_BUTTON);
 }
