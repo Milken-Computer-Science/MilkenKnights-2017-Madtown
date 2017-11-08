@@ -81,10 +81,10 @@ public class GearMech extends Subsystem {
             }
         }
 
-        System.out.println(
+      /*  System.out.println(
             "Voltage: " + gearTalon.getOutputVoltage() / gearTalon.getBusVoltage() + " Position: "
                 + gearTalon.getMkPosition() + " Setpoint: " + gearTalon.getMkSetpoint() + " Error: "
-                + gearTalon.getMkError() + " Velocity " + gearTalon.getMkVelocity());
+                + gearTalon.getMkError() + " Velocity " + gearTalon.getMkVelocity()); */
     }
 
     @Override public void updateAuto() {

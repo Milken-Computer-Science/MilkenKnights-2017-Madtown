@@ -32,15 +32,15 @@ public final class Constants {
         public static final int OPERATOR_STICK = 1;
         public static final int REVERSE_BUTTON = 1;
         public static final int CHEESE_BUTTON = 2;
-        public static final int GEAR_PICKUP_BUTTON = 5;
-        public static final int GEAR_STOW_BUTTON = 4;
-        public static final int GEAR_PLACE_BUTTON = 3;
-        public static final int ROLLER_IN_BUTTON = 7;
-        public static final int ROLLER_OUT_BUTTON = 6;
-        public static final int CLIMBER_FWD_BUTTON = 8;
-        public static final int CLIMBER_BACK_BUTTON = 9;
-        public static final int GEAR_MANUAL_BUTTON = 10;
-        public static final int GEAR_RESET_BUTTON = 11;
+        public static final int GEAR_PICKUP_BUTTON = 2;
+        public static final int GEAR_STOW_BUTTON = 3;
+        public static final int GEAR_PLACE_BUTTON = 4;
+        public static final int ROLLER_IN_BUTTON = 10;
+        public static final int ROLLER_OUT_BUTTON = 5;
+        public static final int CLIMBER_FWD_BUTTON = 6;
+        public static final int CLIMBER_BACK_BUTTON = 8;
+        public static final int GEAR_MANUAL_BUTTON = 1;
+        public static final int GEAR_RESET_BUTTON = 7;
     }
 
 

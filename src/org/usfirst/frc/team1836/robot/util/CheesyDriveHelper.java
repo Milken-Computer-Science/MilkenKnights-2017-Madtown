@@ -117,11 +117,11 @@ public class CheesyDriveHelper {
                 mQuickStopAccumlator = 0.0;
             }
         }
-
+        angularPower = -angularPower;
         rightPwm = leftPwm = linearPower;
         leftPwm += angularPower;
         rightPwm -= angularPower;
-
+        System.out.println("Angular: " + angularPower);
         if (leftPwm > 1.0) {
             rightPwm -= overPower * (leftPwm - 1.0);
             leftPwm = 1.0;
@@ -135,7 +135,7 @@ public class CheesyDriveHelper {
             leftPwm += overPower * (-1.0 - rightPwm);
             rightPwm = -1.0;
         }
-        return new DriveSignal(leftPwm, rightPwm);
+        return new DriveSignal(leftPwm, -rightPwm);
     }
 
     public double handleDeadband(double val, double deadband) {
