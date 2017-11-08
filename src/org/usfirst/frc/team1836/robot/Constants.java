@@ -67,9 +67,7 @@ public final class Constants {
         public static final double M_ACCEL = 0;
         public static final double M_JERK = 0;
         public static final double M_VEL = 0;
-        public static final double DEADBAND = 0.05
-
-
+        
     }
 
 
