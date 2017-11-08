@@ -5,7 +5,6 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.TrajectoryFollower;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1836.robot.Inputs;
@@ -24,11 +23,11 @@ public class Drive extends Subsystem {
     private final MkCANTalon leftbacktalon;
     private final MkCANTalon rightfwdtalon;
     private final MkCANTalon rightbacktalon;
-    private final RobotDrive robotDr;
     private MkGyro navX;
     private TrajectoryFollower trajFollower;
     private double trajectoryDist;
     private CheesyDriveHelper mCheesyDriveHelper = new CheesyDriveHelper();
+    private int reverseState = 1;
 
     private Drive() {
         super("DRIVE");
@@ -75,8 +74,6 @@ public class Drive extends Subsystem {
         leftbacktalon.setPrint(false);
         rightfwdtalon.setPrint(false);
         rightbacktalon.setPrint(false);
-
-        robotDr = new RobotDrive(leftfwdtalon, leftbacktalon, rightfwdtalon, rightbacktalon);
     }
 
     public static Drive getInstance() {
@@ -86,12 +83,19 @@ public class Drive extends Subsystem {
     }
 
     @Override public void updateTeleop() {
+
+        if (Inputs.reverseButton.isPressed()) {
+            reverseState = -reverseState;
+        }
+
         leftfwdtalon.set(mCheesyDriveHelper
-            .cheesyDrive(Inputs.driverJoystick.getRawAxis(1), Inputs.driverJoystick.getRawAxis(2),
-                false, false).getLeft());
+            .cheesyDrive(Inputs.driverJoystick.getRawAxis(1) * reverseState,
+                Inputs.driverJoystick.getRawAxis(2), Inputs.cheezyButton.isHeld(), false)
+            .getLeft());
         rightfwdtalon.set(mCheesyDriveHelper
-            .cheesyDrive(Inputs.driverJoystick.getRawAxis(1), Inputs.driverJoystick.getRawAxis(2),
-                false, false).getRight());
+            .cheesyDrive(Inputs.driverJoystick.getRawAxis(1) * reverseState,
+                Inputs.driverJoystick.getRawAxis(2), Inputs.cheezyButton.isHeld(), false)
+            .getRight());
     }
 
     @Override public void updateAuto() {
@@ -112,10 +116,10 @@ public class Drive extends Subsystem {
     }
 
     @Override public void sendToSmartDash() {
-        SmartDashboard.putNumber("Left Encoder Position", leftfwdtalon.getPosition());
-        SmartDashboard.putNumber("Right Encoder Position", rightfwdtalon.getPosition());
-        SmartDashboard.putNumber("Left Encoder Velocity", leftfwdtalon.getEncVelocity());
-        SmartDashboard.putNumber("Right Encoder Velocity", rightfwdtalon.getEncVelocity());
+        SmartDashboard.putNumber("Left Encoder Position", leftfwdtalon.getMkPosition());
+        SmartDashboard.putNumber("Right Encoder Position", rightfwdtalon.getMkPosition());
+        SmartDashboard.putNumber("Left Encoder Velocity", leftfwdtalon.getMkVelocity());
+        SmartDashboard.putNumber("Right Encoder Velocity", rightfwdtalon.getMkVelocity());
     }
 
     public void setControlMode(TalonControlMode mode) {
@@ -138,8 +142,8 @@ public class Drive extends Subsystem {
     }
 
     public boolean getMotionMagicOnTarget() {
-        return Math.abs(leftfwdtalon.getError()) <= DRIVE.DRIVE_MAGIC_MOTION_TOL
-            && Math.abs(rightfwdtalon.getError()) <= DRIVE.DRIVE_MAGIC_MOTION_TOL;
+        return Math.abs(leftfwdtalon.getMkError()) <= DRIVE.DRIVE_MAGIC_MOTION_TOL
+            && Math.abs(rightfwdtalon.getMkError()) <= DRIVE.DRIVE_MAGIC_MOTION_TOL;
     }
 
     private void setFollowerMode() {

@@ -9,6 +9,8 @@ public class Inputs {
         new MkJoystick(Constants.Input.OPERATOR_STICK);
     public static final MkButton reverseButton =
         driverJoystick.getButton(Constants.Input.REVERSE_BUTTON);
+    public static final MkButton cheezyButton =
+        driverJoystick.getButton(Constants.Input.CHEESE_BUTTON);
     public static final MkButton gearPickupButton =
         operatorJoystick.getButton(Constants.Input.GEAR_PICKUP_BUTTON);
     public static final MkButton gearStowButton =

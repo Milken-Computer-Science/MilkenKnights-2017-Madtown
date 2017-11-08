@@ -31,6 +31,7 @@ public final class Constants {
         public static final int DRIVE_STICK = 0;
         public static final int OPERATOR_STICK = 1;
         public static final int REVERSE_BUTTON = 1;
+        public static final int CHEESE_BUTTON = 2;
         public static final int GEAR_PICKUP_BUTTON = 5;
         public static final int GEAR_STOW_BUTTON = 4;
         public static final int GEAR_PLACE_BUTTON = 3;
@@ -44,19 +45,20 @@ public final class Constants {
 
 
     public static class DRIVE {
-
-        public static final double DRIVE_A = 0;
-        public static final double DRIVE_V = 0;
+        public static final double WHEEL_DIAMETER = 4;
+        public static final double MAX_VEL = ((30) / (WHEEL_DIAMETER * Math.PI)) * 60; //RPM
+        public static final double DRIVE_A = MAX_VEL * 0.75;
+        public static final double DRIVE_V = MAX_VEL * 0.75;
         public static final int DRIVE_I_ZONE = 0;
         public static final double DRIVE_P = 0;
         public static final double DRIVE_I = 0;
         public static final double DRIVE_D = 0;
-        public static final double DRIVE_F = 0;
+        public static final double DRIVE_F = 1.0461748973;
+        public static final double DRIVE_MAGIC_MOTION_TOL = 1;
 
         public static final double DRIVE_FOLLOWER_P = 0;
         public static final double DRIVE_FOLLOWER_D = 0;
         public static final double DRIVE_FOLLOWER_ANG = 0;
-
         public static final double TRAJ_TOL = 0;
 
         public static final int CODES_PER_REV = 4096;
@@ -65,9 +67,9 @@ public final class Constants {
         public static final double M_ACCEL = 0;
         public static final double M_JERK = 0;
         public static final double M_VEL = 0;
+        public static final double DEADBAND = 0.05
 
-        public static final double DRIVE_MAGIC_MOTION_TOL = 1;
-        public static final double WHEEL_DIAMETER = 4;
+
     }
 
 
