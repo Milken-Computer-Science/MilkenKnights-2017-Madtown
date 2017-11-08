@@ -73,7 +73,7 @@ public final class Constants {
 
     public static class GearMech {
         //Degrees - Zeroed on Stow
-        public static final double GEAR_PICKUP = -180;
+        public static final double GEAR_PICKUP = -170;
         public static final double GEAR_PLACE = -110;
         public static final double GEAR_STOW = 0;
 
