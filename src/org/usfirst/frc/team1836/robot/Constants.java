@@ -32,15 +32,17 @@ public final class Constants {
         public static final int OPERATOR_STICK = 1;
         public static final int REVERSE_BUTTON = 1;
         public static final int CHEESE_BUTTON = 2;
+        
+        
         public static final int GEAR_PICKUP_BUTTON = 2;
         public static final int GEAR_STOW_BUTTON = 3;
         public static final int GEAR_PLACE_BUTTON = 4;
         public static final int ROLLER_IN_BUTTON = 10;
         public static final int ROLLER_OUT_BUTTON = 5;
-        public static final int CLIMBER_FWD_BUTTON = 6;
+        public static final int CLIMBER_FWD_BUTTON = 11;
         public static final int CLIMBER_BACK_BUTTON = 8;
         public static final int GEAR_MANUAL_BUTTON = 1;
-        public static final int GEAR_RESET_BUTTON = 7;
+        public static final int GEAR_RESET_BUTTON = 6;
     }
 
 
@@ -73,7 +75,7 @@ public final class Constants {
 
     public static class GearMech {
         //Degrees - Zeroed on Stow
-        public static final double GEAR_PICKUP = -170;
+        public static final double GEAR_PICKUP = -178;
         public static final double GEAR_PLACE = -110;
         public static final double GEAR_STOW = 0;
 
@@ -88,15 +90,15 @@ public final class Constants {
         public static final double ROLLER_SPEED = -0.375;
         public static final double ROLLER_DEFAULT_SPEED = -0.375 / 10;
         public static final double STOW_CURRENT_LIMIT = 8.0;
-        public static final double RESET_CURRENT_LIMIT = 8.0;
-        public static final double RESET_BACK_POWER = -0.25;
+        public static final double RESET_BACK_POWER = 0.25;
+        public static final double PLACE_GEAR_ROLLER_SPEED = -0.1875;
     }
 
 
     public static class Auto {
         public static final double CENTER_AUTO_DISTANCE = 90;
-        public static final double CENTER_AUTO_SPEED = 0.75;
-        public static final double CENTER_AUTO_TIME = 5;
+        public static final double CENTER_AUTO_SPEED = 0.6;
+        public static final double CENTER_AUTO_TIME = 4.1;
     }
 
 

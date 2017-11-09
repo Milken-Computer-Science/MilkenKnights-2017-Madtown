@@ -5,6 +5,8 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.TrajectoryFollower;
+
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1836.robot.Inputs;
@@ -28,7 +30,8 @@ public class Drive extends Subsystem {
   private TrajectoryFollower trajFollower;
   private double trajectoryDist;
   private CheesyDriveHelper mCheesyDriveHelper = new CheesyDriveHelper();
-  private int reverseState = 1;
+  private int reverseState = -1;
+  private RobotDrive robotDr;
 
   private Drive() {
     super("DRIVE");
@@ -75,6 +78,8 @@ public class Drive extends Subsystem {
     leftbacktalon.setPrint(false);
     rightfwdtalon.setPrint(false);
     rightbacktalon.setPrint(false);
+    
+    robotDr = new RobotDrive(leftfwdtalon, leftbacktalon, rightfwdtalon, rightbacktalon);
   }
 
   public static Drive getInstance() {
@@ -89,14 +94,10 @@ public class Drive extends Subsystem {
     if (Inputs.reverseButton.isPressed()) {
       reverseState = -reverseState;
     }
-    DriveSignal sig =
-        mCheesyDriveHelper.cheesyDrive(Inputs.driverJoystick.getRawAxis(1) * reverseState,
-            Inputs.driverJoystick.getRawAxis(2), Inputs.cheezyButton.isHeld(), false);
+    DriveSignal sig = mCheesyDriveHelper.cheesyDrive(-Inputs.driverJoystick.getRawAxis(2),
+        Inputs.driverJoystick.getRawAxis(1) * reverseState, Inputs.cheezyButton.isHeld());
     leftfwdtalon.set(sig.getLeft());
     rightfwdtalon.set(sig.getRight());
-    System.out.println(Inputs.driverJoystick.getRawAxis(2));
-    System.out.println("Left Position: " + leftfwdtalon.getMkPosition() + " Right Position:  "
-        + rightfwdtalon.getMkPosition() + "Left Velocity " + leftfwdtalon.getMkVelocity());
   }
 
   @Override
@@ -111,12 +112,14 @@ public class Drive extends Subsystem {
     setFollowerMode();
     leftfwdtalon.setEncPosition(0);
     rightfwdtalon.setEncPosition(0);
+    navX.zeroYaw();
   }
 
   @Override
   public void initAuto() {
     leftfwdtalon.setEncPosition(0);
     rightfwdtalon.setEncPosition(0);
+    navX.zeroYaw();
   }
 
   @Override
@@ -125,6 +128,7 @@ public class Drive extends Subsystem {
     SmartDashboard.putNumber("Right Encoder Position", rightfwdtalon.getMkPosition());
     SmartDashboard.putNumber("Left Encoder Velocity", leftfwdtalon.getMkVelocity());
     SmartDashboard.putNumber("Right Encoder Velocity", rightfwdtalon.getMkVelocity());
+    SmartDashboard.putNumber("NavX Yaw", navX.getYaw());
   }
 
   public void setControlMode(TalonControlMode mode) {
@@ -134,8 +138,7 @@ public class Drive extends Subsystem {
   }
 
   public void setDrive(double val) {
-    leftfwdtalon.set(val);
-    rightfwdtalon.set(val);
+    robotDr.arcadeDrive(-val, -(navX.getYaw() * 0.2));
   }
 
   public void setMagicPosition(double pos) {

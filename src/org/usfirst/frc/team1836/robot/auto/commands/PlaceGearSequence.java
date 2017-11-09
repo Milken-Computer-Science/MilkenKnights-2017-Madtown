@@ -7,33 +7,39 @@ import org.usfirst.frc.team1836.robot.subsystems.GearMech;
 
 public class PlaceGearSequence extends Command {
 
-    private final double time;
-    private Timer timer;
+  private final double time;
+  private Timer timer;
 
-    public PlaceGearSequence(double time) {
-        this.time = time;
-    }
+  public PlaceGearSequence(double time) {
+    this.time = time;
+  }
 
-    @Override protected void initialize() {
-        timer.start();
-        GearMech.getInstance().set(GearMech.GearMechanismState.PICKUP);
-    }
+  @Override
+  protected void initialize() {
+    timer = new Timer();
+    timer.start();
+    GearMech.getInstance().set(GearMech.GearMechanismState.PICKUP);
+  }
 
-    @Override protected void execute() {
+  @Override
+  protected void execute() {
 
-        GearMech.getInstance().setRollers(-Constants.GearMech.ROLLER_SPEED);
-    }
+   // GearMech.getInstance().setRollers(-Constants.GearMech.ROLLER_SPEED);
+  }
 
-    @Override protected boolean isFinished() {
-        return timer.get() < time;
+  @Override
+  protected boolean isFinished() {
+    return timer.get() > time;
 
-    }
+  }
 
-    @Override protected void end() {
+  @Override
+  protected void end() {
 
-    }
+  }
 
-    @Override protected void interrupted() {
+  @Override
+  protected void interrupted() {
 
-    }
+  }
 }

@@ -7,31 +7,42 @@ import org.usfirst.frc.team1836.robot.subsystems.Drive;
 
 public class TimedDrive extends Command {
 
-    private final double time;
-    private Timer timer;
+  private final double time;
+  private Timer timer;
 
-    public TimedDrive(double time) {
-        this.time = time;
+  public TimedDrive(double time) {
+    this.time = time;
+  }
+
+  @Override
+  protected void initialize() {
+    timer = new Timer();
+    timer.start();
+  }
+
+  @Override
+  protected void execute() {
+    if (timer.get() < time) {
+      Drive.getInstance().setDrive(Constants.Auto.CENTER_AUTO_SPEED);
     }
-
-    @Override protected void initialize() {
-        timer.start();
+    else{
+      Drive.getInstance().setDrive(0);
     }
+  }
 
-    @Override protected void execute() {
-        Drive.getInstance().setDrive(Constants.Auto.CENTER_AUTO_SPEED);
-    }
+  @Override
+  protected boolean isFinished() {
+    return timer.get() > time;
 
-    @Override protected boolean isFinished() {
-        return timer.get() < time;
+  }
 
-    }
+  @Override
+  protected void end() {
 
-    @Override protected void end() {
+  }
 
-    }
+  @Override
+  protected void interrupted() {
 
-    @Override protected void interrupted() {
-
-    }
+  }
 }
