@@ -22,8 +22,11 @@ public class TimedDrive extends Command {
 
   @Override
   protected void execute() {
-    if (timer.get() < time) {
+    if (timer.get() < time * 0.75) {
       Drive.getInstance().setDrive(Constants.Auto.CENTER_AUTO_SPEED);
+    }
+    else if (timer.get() < time){
+      Drive.getInstance().setDrive(Constants.Auto.CENTER_AUTO_SPEED / 2);
     }
     else{
       Drive.getInstance().setDrive(0);

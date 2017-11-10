@@ -97,8 +97,8 @@ public final class Constants {
     public static class Auto {
         public static final double CENTER_AUTO_DISTANCE = 90;
         public static final double CENTER_AUTO_SPEED = 0.6;
-        public static final double CENTER_AUTO_TIME = 2.25;
-        public static final double BASELINE_TIME = 4;
+        public static final double CENTER_AUTO_TIME = 2.5;
+        public static final double BASELINE_TIME = 2.5;
     }
 
 
