@@ -4,28 +4,32 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import org.usfirst.frc.team1836.robot.auto.commandgroups.MagicCenterAuto;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team1836.robot.auto.commandgroups.BaselineAuto;
 import org.usfirst.frc.team1836.robot.auto.commandgroups.NoAuto;
 import org.usfirst.frc.team1836.robot.auto.commandgroups.TimedCenterAuto;
-import org.usfirst.frc.team1836.robot.auto.commands.CenterPathFollower;
 import org.usfirst.frc.team1836.robot.subsystems.Climber;
 import org.usfirst.frc.team1836.robot.subsystems.Drive;
 import org.usfirst.frc.team1836.robot.subsystems.GearMech;
 
 public class Robot extends IterativeRobot {
-    private static SendableChooser<CommandGroup> mainAutoChooser = new SendableChooser<>();
-    private CommandGroup autonomousCommand;
-RobotDrive robotdr;
+
+    RobotDrive robotdr;
+
+    private Command autonomousCommand;
+    private SendableChooser<Command> chooser = new SendableChooser<>();
+
     @Override public void robotInit() {
         Drive.getInstance();
         GearMech.getInstance();
         Climber.getInstance();
         CameraServer.getInstance().startAutomaticCapture();
-        mainAutoChooser.addObject("No Auto", new NoAuto());
-        mainAutoChooser.addObject("Time Auto", new TimedCenterAuto());
+        chooser.addObject("No Auto", new NoAuto());
+        chooser.addObject("Timed Center Auto", new TimedCenterAuto());
+        chooser.addDefault("Baseline Auto", new BaselineAuto());
+        SmartDashboard.putData("Auto mode", chooser);
     }
 
     @Override public void autonomousInit() {

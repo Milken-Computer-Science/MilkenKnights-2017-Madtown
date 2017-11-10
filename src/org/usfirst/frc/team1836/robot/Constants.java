@@ -99,11 +99,12 @@ public final class Constants {
         public static final double CENTER_AUTO_DISTANCE = 90;
         public static final double CENTER_AUTO_SPEED = 0.6;
         public static final double CENTER_AUTO_TIME = 4.1;
+        public static final double BASELINE_TIME = 4;
     }
 
 
     public static class Climb {
-        public static final double CLIMBER_SPEED = 0.75;
+        public static final double CLIMBER_SPEED = 0.95;
     }
 
 }
