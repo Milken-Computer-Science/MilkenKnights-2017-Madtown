@@ -90,12 +90,12 @@ public class Drive extends Subsystem {
 
   @Override
   public void updateTeleop() {
-
-    if (Inputs.reverseButton.isPressed()) {
-      reverseState = -reverseState;
-    }
+    
+    reverseState = Inputs.reverseButton.isPressed() ? -reverseState : reverseState;
+    
+    int holdManual = Inputs.reverseHoldButton.isHeld() ? -1 : 1;
     DriveSignal sig = mCheesyDriveHelper.cheesyDrive(-Inputs.driverJoystick.getRawAxis(2),
-        Inputs.driverJoystick.getRawAxis(1) * reverseState, Inputs.cheezyButton.isHeld());
+        Inputs.driverJoystick.getRawAxis(1) * reverseState * holdManual, Inputs.cheezyButton.isHeld());
     leftfwdtalon.set(sig.getLeft());
     rightfwdtalon.set(sig.getRight());
   }
@@ -113,6 +113,8 @@ public class Drive extends Subsystem {
     leftfwdtalon.setEncPosition(0);
     rightfwdtalon.setEncPosition(0);
     navX.zeroYaw();
+    
+    reverseState = 1;
   }
 
   @Override

@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
         Drive.getInstance();
         GearMech.getInstance();
         Climber.getInstance();
-        CameraServer.getInstance().startAutomaticCapture();
+        CameraServer.getInstance().startAutomaticCapture().setResolution(1280, 720);
         chooser.addObject("No Auto", new NoAuto());
         chooser.addObject("Timed Center Auto", new TimedCenterAuto());
         chooser.addDefault("Baseline Auto", new BaselineAuto());

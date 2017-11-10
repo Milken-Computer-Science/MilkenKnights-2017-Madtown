@@ -9,6 +9,8 @@ public class Inputs {
         new MkJoystick(Constants.Input.OPERATOR_STICK);
     public static final MkButton reverseButton =
         driverJoystick.getButton(Constants.Input.REVERSE_BUTTON);
+    public static final MkButton reverseHoldButton =
+        driverJoystick.getButton(Constants.Input.REVERSE_HOLD_BUTTON);
     public static final MkButton cheezyButton =
         driverJoystick.getButton(Constants.Input.CHEESE_BUTTON);
     public static final MkButton gearPickupButton =
@@ -23,8 +25,6 @@ public class Inputs {
         operatorJoystick.getButton(Constants.Input.ROLLER_OUT_BUTTON);
     public static final MkButton climberFwdButton =
         operatorJoystick.getButton(Constants.Input.CLIMBER_FWD_BUTTON);
-    public static final MkButton climberBackButton =
-        operatorJoystick.getButton(Constants.Input.CLIMBER_BACK_BUTTON);
     public static final MkButton gearManualButton =
         operatorJoystick.getButton(Constants.Input.GEAR_MANUAL_BUTTON);
     public static final MkButton gearResetButton =

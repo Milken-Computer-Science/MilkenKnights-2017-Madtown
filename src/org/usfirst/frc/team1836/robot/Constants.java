@@ -32,7 +32,7 @@ public final class Constants {
         public static final int OPERATOR_STICK = 1;
         public static final int REVERSE_BUTTON = 1;
         public static final int CHEESE_BUTTON = 2;
-        
+        public static final int REVERSE_HOLD_BUTTON = 3;
         
         public static final int GEAR_PICKUP_BUTTON = 2;
         public static final int GEAR_STOW_BUTTON = 3;
@@ -40,7 +40,6 @@ public final class Constants {
         public static final int ROLLER_IN_BUTTON = 10;
         public static final int ROLLER_OUT_BUTTON = 5;
         public static final int CLIMBER_FWD_BUTTON = 11;
-        public static final int CLIMBER_BACK_BUTTON = 8;
         public static final int GEAR_MANUAL_BUTTON = 1;
         public static final int GEAR_RESET_BUTTON = 6;
     }
@@ -98,7 +97,7 @@ public final class Constants {
     public static class Auto {
         public static final double CENTER_AUTO_DISTANCE = 90;
         public static final double CENTER_AUTO_SPEED = 0.6;
-        public static final double CENTER_AUTO_TIME = 4.1;
+        public static final double CENTER_AUTO_TIME = 2.25;
         public static final double BASELINE_TIME = 4;
     }
 
