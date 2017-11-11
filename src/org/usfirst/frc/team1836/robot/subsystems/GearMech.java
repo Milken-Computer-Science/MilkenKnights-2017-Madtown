@@ -48,6 +48,7 @@ public class GearMech extends Subsystem {
 
   @Override
   public void updateTeleop() {
+    gearTalon.changeControlMode(TalonControlMode.MotionMagic);
     if (Inputs.gearResetButton.isPressed()) {
       gearTalon.setEncPosition(0);
       set(GearMechanismState.STOW);
@@ -55,38 +56,42 @@ public class GearMech extends Subsystem {
     manual = Inputs.gearManualButton.isHeld() ? true : false;
     if (manual) {
       gearTalon.changeControlMode(TalonControlMode.PercentVbus);
-    } else {
-      gearTalon.changeControlMode(TalonControlMode.MotionMagic);
-    }
-    if (manual) {
       gearTalon.set(Inputs.operatorJoystick.getRawAxis(1) / 3);
-    } else if (Inputs.gearPickupButton.isPressed()) {
-      set(GearMechanismState.PICKUP);
-    } else if (Inputs.gearStowButton.isPressed()) {
-      set(GearMechanismState.STOW);
-    } else if (Inputs.gearPlaceButton.isPressed()) {
-      set(GearMechanismState.PLACE);
-    }
-
-
-    if (Inputs.rollerInButton.isHeld()
-        && rollerTalon.getOutputCurrent() < Constants.GearMech.STOW_CURRENT_LIMIT) {
-      rollerTalon.set(Constants.GearMech.ROLLER_SPEED);
-    } else if (Inputs.rollerInButton.isHeld()) {
-      rollerTalon.set(Constants.GearMech.ROLLER_DEFAULT_SPEED);
-      set(GearMechanismState.STOW);
-    } else if (Inputs.rollerOutButton.isHeld() && gearMechState != GearMechanismState.STOW) {
-      
-      if (!manual && gearMechState == GearMechanismState.PLACE) {
-        set(GearMechanismState.PICKUP);
-        rollerTalon.set(-Constants.GearMech.PLACE_GEAR_ROLLER_SPEED);
-      }
-      else{
+      if (Inputs.rollerInButton.isHeld()) {
+        rollerTalon.set(Constants.GearMech.ROLLER_SPEED);
+      } else if (Inputs.rollerOutButton.isHeld()) {
         rollerTalon.set(-Constants.GearMech.ROLLER_SPEED);
+      } else {
+        rollerTalon.set(0);
       }
     } else {
-      rollerTalon.set(manual ? 0 : -0.1);
+      if (Inputs.gearPickupButton.isPressed()) {
+        set(GearMechanismState.PICKUP);
+      } else if (Inputs.gearStowButton.isPressed()) {
+        set(GearMechanismState.STOW);
+      } else if (Inputs.gearPlaceButton.isPressed()) {
+        set(GearMechanismState.PLACE);
+      }
+
+
+      if (Inputs.rollerInButton.isHeld()
+          && rollerTalon.getOutputCurrent() < Constants.GearMech.STOW_CURRENT_LIMIT) {
+        rollerTalon.set(Constants.GearMech.ROLLER_SPEED);
+      } else if (Inputs.rollerInButton.isHeld()) {
+        rollerTalon.set(Constants.GearMech.ROLLER_DEFAULT_SPEED);
+        set(GearMechanismState.STOW);
+      } else if (Inputs.rollerOutButton.isHeld() && gearMechState != GearMechanismState.STOW) {
+        if (gearMechState == GearMechanismState.PLACE) {
+          set(GearMechanismState.PICKUP);
+          rollerTalon.set(-Constants.GearMech.PLACE_GEAR_ROLLER_SPEED);
+        } else {
+          rollerTalon.set(-Constants.GearMech.ROLLER_SPEED);
+        }
+      } else {
+        rollerTalon.set(-0.1);
+      }
     }
+
     /*
      * System.out.println( "Voltage: " + gearTalon.getOutputVoltage() / gearTalon.getBusVoltage() +
      * " Position: " + gearTalon.getMkPosition() + " Setpoint: " + gearTalon.getMkSetpoint() +
@@ -121,7 +126,7 @@ public class GearMech extends Subsystem {
   }
 
   public void setRollers(double val) {
-    rollerTalon.set(-val);
+    rollerTalon.set(val);
   }
 
   public GearMechanismState getState() {

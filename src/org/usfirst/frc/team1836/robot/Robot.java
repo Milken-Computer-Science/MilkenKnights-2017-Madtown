@@ -16,8 +16,6 @@ import org.usfirst.frc.team1836.robot.subsystems.GearMech;
 
 public class Robot extends IterativeRobot {
 
-    RobotDrive robotdr;
-
     private Command autonomousCommand;
     private SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -25,7 +23,7 @@ public class Robot extends IterativeRobot {
         Drive.getInstance();
         GearMech.getInstance();
         Climber.getInstance();
-        CameraServer.getInstance().startAutomaticCapture().setResolution(1280, 720);
+        CameraServer.getInstance().startAutomaticCapture().setResolution(640, 360);
         chooser.addObject("No Auto", new NoAuto());
         chooser.addObject("Timed Center Auto", new TimedCenterAuto());
         chooser.addDefault("Baseline Auto", new BaselineAuto());
@@ -34,7 +32,7 @@ public class Robot extends IterativeRobot {
 
     @Override public void autonomousInit() {
         Systems.initAuto();
-        autonomousCommand = new TimedCenterAuto();
+        autonomousCommand = chooser.getSelected();
         if (autonomousCommand != null) {
             autonomousCommand.start();
         }

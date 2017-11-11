@@ -10,8 +10,7 @@ import org.usfirst.frc.team1836.robot.subsystems.GearMech;
  */
 public class BaselineAuto extends CommandGroup {
 
-    public BaselineAuto() {
-        addSequential(new TimedDrive(Constants.Auto.BASELINE_TIME));
-        GearMech.getInstance().set(GearMech.GearMechanismState.PLACE);
-    }
+  public BaselineAuto() {
+    addSequential(new TimedDrive(Constants.Auto.BASELINE_TIME));
+  }
 }

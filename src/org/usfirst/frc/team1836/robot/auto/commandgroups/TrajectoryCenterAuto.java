@@ -5,9 +5,9 @@ import org.usfirst.frc.team1836.robot.auto.commands.CenterPathFollower;
 
 public class TrajectoryCenterAuto extends CommandGroup {
 
-    public TrajectoryCenterAuto() {
-        addSequential(new CenterPathFollower());
-    }
+  public TrajectoryCenterAuto() {
+    addSequential(new CenterPathFollower());
+  }
 }
 
 

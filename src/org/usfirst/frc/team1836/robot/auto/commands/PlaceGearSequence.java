@@ -24,7 +24,7 @@ public class PlaceGearSequence extends Command {
   @Override
   protected void execute() {
 
-   // GearMech.getInstance().setRollers(-Constants.GearMech.ROLLER_SPEED);
+    // GearMech.getInstance().setRollers(-Constants.GearMech.ROLLER_SPEED);
   }
 
   @Override
